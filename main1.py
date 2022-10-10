@@ -1,18 +1,18 @@
 import sounddevice as sd
 import soundfile as sf
 import speech_recognition as sr1
-import mutagen
-from mutagen.wave import WAVE
-# import nlp
+# import mutagen
+# from mutagen.wave import WAVE
+import nlp
+
 r = sr1.Recognizer()
 
-samplerate = 64000  # Hertz
-duration = 5  # seconds
+samplerate = 44100  # Hertz
+duration = 30  # seconds
 filename = 'output.wav'
 
 print("Start talking")
-mydata = sd.rec(int(samplerate * duration), samplerate=samplerate,
-                channels=3, blocking=True)
+mydata = sd.rec(int(samplerate * duration), samplerate=samplerate, channels=2, blocking=True)
 sf.write(filename, mydata, samplerate)
 hellow = sr1.AudioFile('output.wav')
 with hellow as source:
@@ -20,8 +20,7 @@ with hellow as source:
 s = r.recognize_google(audio)
 
 print(s)
-# print(nlp_analysis(s))
-
+print(nlp.nlp_analysis(s))
 
 # from punctuator import Punctuator
 # p=Punctuator('INTERSPEECH-T-BRNN.pcl')
