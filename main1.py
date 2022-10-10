@@ -3,7 +3,7 @@ import soundfile as sf
 import speech_recognition as sr1
 import mutagen
 from mutagen.wave import WAVE
-# import nlp
+import nlp
 r = sr1.Recognizer()
 
 samplerate = 64000  # Hertz
@@ -20,7 +20,7 @@ with hellow as source:
 s = r.recognize_google(audio)
 
 print(s)
-# print(nlp_analysis(s))
+print(nlp.nlp_analysis(s))
 
 
 # from punctuator import Punctuator
