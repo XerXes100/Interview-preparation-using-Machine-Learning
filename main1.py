@@ -6,13 +6,13 @@ from mutagen.wave import WAVE
 # import nlp
 r = sr1.Recognizer()
 
-samplerate = 44100  # Hertz
+samplerate = 64000  # Hertz
 duration = 5  # seconds
 filename = 'output.wav'
 
 print("Start talking")
 mydata = sd.rec(int(samplerate * duration), samplerate=samplerate,
-                channels=2, blocking=True)
+                channels=3, blocking=True)
 sf.write(filename, mydata, samplerate)
 hellow = sr1.AudioFile('output.wav')
 with hellow as source:
