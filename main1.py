@@ -8,7 +8,7 @@ import nlp
 r = sr1.Recognizer()
 
 samplerate = 44100  # Hertz
-duration = 10  # seconds
+duration = 20  # seconds
 filename = 'output.wav'
 
 print("Start talking")
@@ -21,10 +21,11 @@ s = r.recognize_google(audio)
 
 print(s)
 
-# punc_text=nlp.punctuation(s)
-# print(punc_text)
-# sent = nlp.lemmatization(s)
-print(nlp.entity_analysis(s))
+punc_text=nlp.punctuation(s)
+print(punc_text)
+sent = nlp.lemmatization(punc_text)
+print(sent)
+print(nlp.entity_analysis(sent))
 # from punctuator import Punctuator
 # p=Punctuator('INTERSPEECH-T-BRNN.pcl')
 # text_audio_punc = p.punctuate(s)
