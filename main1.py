@@ -8,7 +8,7 @@ import nlp
 r = sr1.Recognizer()
 
 samplerate = 44100  # Hertz
-duration = 30  # seconds
+duration = 10  # seconds
 filename = 'output.wav'
 
 print("Start talking")
@@ -20,30 +20,12 @@ with hellow as source:
 s = r.recognize_google(audio)
 
 print(s)
-print(nlp.nlp_analysis(s))
 
+# punc_text=nlp.punctuation(s)
+# print(punc_text)
+# sent = nlp.lemmatization(s)
+print(nlp.entity_analysis(s))
 # from punctuator import Punctuator
 # p=Punctuator('INTERSPEECH-T-BRNN.pcl')
 # text_audio_punc = p.punctuate(s)
 # print(text_audio_punc)
-
-# def audio_duration(length):
-#     hours = length // 3600  # calculate in hours
-#     length %= 3600
-#     mins = length // 60  # calculate in minutes
-#     length %= 60
-#     seconds = length  # calculate in seconds
-#
-#     return hours, mins, seconds  # returns the duration
-#
-#
-# # Create a WAVE object
-# # Specify the directory address of your wavpack file
-# # "alarm.wav" is the name of the audiofile
-# audio = WAVE("output.wav")
-#
-# # contains all the metadata about the wavpack file
-# audio_info = audio.info
-# length = int(audio_info.length)
-# hours, mins, seconds = audio_duration(length)
-# print('Total Duration: {}:{}:{}'.format(hours, mins, seconds))
