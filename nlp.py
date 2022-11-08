@@ -8,6 +8,8 @@ from nltk.tokenize import TweetTokenizer
 # from punctuator import Punctuator
 # from deepmultilingualpunctuation import PunctuationModel
 from spacy.lang.en import English
+import crepe
+from scipy.io import wavfile
 
 nltk.download("punkt")
 nltk.download("vader_lexicon")
@@ -46,4 +48,11 @@ def lemmatization(transcript):
 #     # p = Punctuator('INTERSPEECH-T-BRNN.pcl')
 #     # text_audio_punc = p.punctuate(transcript)
 #     # return text_audio_punc
+
+def pitch(audio_path):
+    sr, audio = wavfile.read(audio_path)
+    time, frequency, confidence, activation = crepe.predict(audio, sr, viterbi=True)
+    print(confidence)
+    print(sum(confidence)*100,len(confidence))
+    print('average',sum(confidence)*100/len(confidence))
 
