@@ -55,6 +55,7 @@ def punctuation(transcript):
 def confidence_analysis(audio_path):
     sr, audio = wavfile.read(audio_path)
     time, frequency, confidence, activation = crepe.predict(audio, sr, viterbi=True)
-    print(confidence)
-    print(sum(confidence)*100,len(confidence))
-    print('average',sum(confidence)*100/len(confidence))
+    # print(confidence)
+    # print(sum(confidence)*100,len(confidence))
+    print('Frequency:',sum(frequency)/len(frequency))
+    print('Confidence Level:',sum(confidence)*100/len(confidence))
