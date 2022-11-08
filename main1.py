@@ -8,15 +8,15 @@ import nlp
 r = sr1.Recognizer()
 
 samplerate = 44100  # Hertz
-duration = 20 # seconds
+duration = 15 # seconds
 filename = 'output.wav'
 
 
 print("\n")
 print("\n")
 print("Start talking:")
-# mydata = sd.rec(int(samplerate * duration), samplerate=samplerate, channels=2, blocking=True)
-# sf.write(filename, mydata, samplerate)
+mydata = sd.rec(int(samplerate * duration), samplerate=samplerate, channels=2, blocking=True)
+sf.write(filename, mydata, samplerate)
 hellow = sr1.AudioFile('output.wav')
 with hellow as source:
     audio = r.record(source)
@@ -30,7 +30,5 @@ sent = nlp.lemmatization(punc_text)
 # print(sent)
 print(nlp.sentiment_analysis(sent))
 print(nlp.entity_analysis(sent))
-# from punctuator import Punctuator
-# p=Punctuator('INTERSPEECH-T-BRNN.pcl')
-# text_audio_punc = p.punctuate(s)
-# print(text_audio_punc)
+
+print(nlp.confidence_analysis(filename))
