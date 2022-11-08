@@ -7,8 +7,8 @@ from nltk.tokenize import TweetTokenizer
 from punctuator import Punctuator
 # from deepmultilingualpunctuation import PunctuationModel
 from spacy.lang.en import English
-import crepe
 from scipy.io import wavfile
+import crepe
 
 # nltk.download('stopwords')
 # nltk.download("punkt")
@@ -22,17 +22,17 @@ nlp = spacy.load("en_core_web_sm")
 
 # nlp = en_core_web_sm.load()
 
-
-def entity_analysis(transcript):
+def sentiment_analysis(transcript):
     sid = SentimentIntensityAnalyzer()
-
     print("Sentimental scores", sid.polarity_scores(transcript))
     doc = nlp(transcript)
-    print(doc)
+    # print(doc)
     # Find named entities in doc
+    
+def entity_analysis(transcript):
+    doc = nlp(transcript)
     for entity in doc.ents:
         print(entity.text, entity.label_)
-
 
 def lemmatization(transcript):
     sentences = nltk.sent_tokenize(transcript)
@@ -52,10 +52,9 @@ def punctuation(transcript):
     text_audio_punc = p.punctuate(transcript)
     return text_audio_punc
 
-def pitch(audio_path):
+def confidence_analysis(audio_path):
     sr, audio = wavfile.read(audio_path)
     time, frequency, confidence, activation = crepe.predict(audio, sr, viterbi=True)
     print(confidence)
     print(sum(confidence)*100,len(confidence))
     print('average',sum(confidence)*100/len(confidence))
-
