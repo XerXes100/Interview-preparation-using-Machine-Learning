@@ -20,17 +20,17 @@ nlp = spacy.load("en_core_web_sm")
 
 # nlp = en_core_web_sm.load()
 
-
-def entity_analysis(transcript):
+def sentiment_analysis(transcript):
     sid = SentimentIntensityAnalyzer()
-
     print("Sentimental scores", sid.polarity_scores(transcript))
     doc = nlp(transcript)
-    print(doc)
+    # print(doc)
     # Find named entities in doc
+    
+def entity_analysis(transcript):
+    doc = nlp(transcript)
     for entity in doc.ents:
         print(entity.text, entity.label_)
-
 
 def lemmatization(transcript):
     sentences = nltk.sent_tokenize(transcript)
