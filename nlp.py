@@ -4,7 +4,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 from nltk.tokenize import TweetTokenizer
-from punctuator import Punctuator
+# from punctuator import Punctuator
 # from deepmultilingualpunctuation import PunctuationModel
 from spacy.lang.en import English
 from scipy.io import wavfile
@@ -44,13 +44,13 @@ def lemmatization(transcript):
     listToStr = ' '.join([str(elem) for elem in sentences])
     return listToStr
 
-def punctuation(transcript):
-    # model = PunctuationModel()
-    # result = model.restore_punctuation(transcript)
-    # return result
-    p = Punctuator('INTERSPEECH-T-BRNN.pcl')
-    text_audio_punc = p.punctuate(transcript)
-    return text_audio_punc
+# def punctuation(transcript):
+#     # model = PunctuationModel()
+#     # result = model.restore_punctuation(transcript)
+#     # return result
+#     p = Punctuator('INTERSPEECH-T-BRNN.pcl')
+#     text_audio_punc = p.punctuate(transcript)
+#     return text_audio_punc
 
 def confidence_analysis(audio_path):
     sr, audio = wavfile.read(audio_path)

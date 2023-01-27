@@ -22,11 +22,11 @@ with hellow as source:
     audio = r.record(source)
 s = r.recognize_google(audio)
 
-# print(s)
+print(s)
 
-punc_text=nlp.punctuation(s)
-print(punc_text)
-sent = nlp.lemmatization(punc_text)
+# punc_text=nlp.punctuation(s)
+# print(punc_text)
+sent = nlp.lemmatization(s)
 # print(sent)
 print(nlp.sentiment_analysis(sent))
 print(nlp.entity_analysis(sent))
