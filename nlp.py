@@ -1,5 +1,4 @@
 import nltk
-import ssl
 import spacy
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.stem import WordNetLemmatizer
@@ -11,18 +10,11 @@ from spacy.lang.en import English
 from scipy.io import wavfile
 import crepe
 
-try:
-    _create_unverified_https_context = ssl._create_unverified_context
-except AttributeError:
-    pass
-else:
-    ssl._create_default_https_context = _create_unverified_https_context
-
-nltk.download('stopwords')
-nltk.download("punkt")
-nltk.download("vader_lexicon")
-nltk.download('wordnet')
-nltk.download('omw-1.4')
+# nltk.download('stopwords')
+# nltk.download("punkt")
+# nltk.download("vader_lexicon")
+# nltk.download('wordnet')
+# nltk.download('omw-1.4')
 
 # Load spaCy language model
 nlp = spacy.load("en_core_web_sm")
@@ -60,9 +52,9 @@ def lemmatization(transcript):
 #     text_audio_punc = p.punctuate(transcript)
 #     return text_audio_punc
 
-# def confidence_analysis(audio_path):
-#     sr, audio = wavfile.read(audio_path)
-#     time, frequency, confidence, activation = crepe.predict(audio, sr, viterbi=True)
-#     print(confidence)
-#     print(sum(confidence)*100,len(confidence))
-#     print('average',sum(confidence)*100/len(confidence))
+def confidence_analysis(audio_path):
+    sr, audio = wavfile.read(audio_path)
+    time, frequency, confidence, activation = crepe.predict(audio, sr, viterbi=True)
+    print(confidence)
+    print(sum(confidence)*100,len(confidence))
+    print('average',sum(confidence)*100/len(confidence))
