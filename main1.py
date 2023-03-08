@@ -15,7 +15,7 @@ filename = 'output.wav'
 print("\n")
 print("\n")
 print("Start talking:")
-mydata = sd.rec(int(samplerate * duration), samplerate=samplerate, channels=2, blocking=True)
+mydata = sd.rec(int(samplerate * duration), samplerate=samplerate, channels=1, blocking=True)
 sf.write(filename, mydata, samplerate)
 hellow = sr1.AudioFile('output.wav')
 with hellow as source:
