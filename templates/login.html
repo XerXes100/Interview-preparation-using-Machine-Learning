@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
 </head>
 <body>
     <div class="main">
@@ -31,12 +31,13 @@
                 </form>
     
                 <div class="tip">
-                    <p >Don't have an account? <a href="signup.html">Sign Up</a></p>
+                    <p >Don't have an account? <a href="{{ url_for('signup') }}">Sign Up</a></p>
                 </div>
             </div>
         </div>
         <div class="picture">
-            <img src="./images/Log In.png" alt="">
+            <img src={{ url_for('static', filename='images/LogIn.png') }}>
+            <!-- <img src="./images/Log In.png" alt=""> -->
         </div>
     </div>
 </body>

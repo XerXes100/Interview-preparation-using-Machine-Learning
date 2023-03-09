@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Practice</title>
-    <link rel="stylesheet" href="./css/main.css">
-    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+
 </head>
+
 <body>
     <nav>
         <div class="nav-title">
@@ -16,9 +18,10 @@
     </nav>
 
     <div class="main-home" id="question">
-    
-        <h2>What are your strengths?</h2> 
-        <h3>Tips to answer this question</h3>      
+
+        <h2>What are your strengths?</h2>
+        <h3>Tips to answer this question</h3>
     </div>
 </body>
+
 </html>

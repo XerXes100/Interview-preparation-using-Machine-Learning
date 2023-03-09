@@ -1,71 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
-    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
 </head>
+
 <body>
     <div class="main">
-        
+
         <div class="picture_sign">
-             <!-- Slideshow container -->
+            <!-- Slideshow container -->
             <div class="slideshow-container">
 
                 <!-- Full-width images with number and caption text -->
                 <div class="mySlides fade">
-                    <img src="images/Sign Up 1.png" style="width:100%">
+                    <img src={{ url_for('static', filename='images/SignUp1.png' ) }} style="width:100%">
                     <div class="testimonial">
-                        <h2 class="testimonial-text"> <span class="quote"> &#8220 </span>  I became much more <br> confident during <br> interviews. </h2>
+                        <h2 class="testimonial-text"> <span class="quote"> &#8220 </span> I became much more <br>
+                            confident during <br> interviews. </h2>
                         <p class="testimonial-person">Sarah Jane</p>
                         <p class="testimonial-desig">Student, NMIMS</p>
                     </div>
                 </div>
-            
+
                 <div class="mySlides fade">
-                    <img src="images/Sign Up 2.png" style="width:100%">
+                    <img src={{ url_for('static', filename='images/SignUp2.png' ) }} style="width:100%">
                     <div class="testimonial">
-                        <h2 class="testimonial-text"> <span class="quote"> &#8220 </span> I was able to crack <br> interviews with ease <br> using this application </h2>
+                        <h2 class="testimonial-text"> <span class="quote"> &#8220 </span> I was able to crack <br>
+                            interviews with ease <br> using this application </h2>
                         <p class="testimonial-person">Jake Scott</p>
                         <p class="testimonial-desig">Student, NMIMS</p>
 
                     </div>
                 </div>
-            
+
                 <div class="mySlides fade">
-                    <img src="images/Sign Up 3.png" style="width:100%">
+                    <img src={{ url_for('static', filename='images/SignUp3.png' ) }} style="width:100%">
                     <div class="testimonial">
-                        <h2 class="testimonial-text"> <span class="quote"> &#8220 </span> I dont feel nervous <br> in interviews <br> anymore. </h2>
+                        <h2 class="testimonial-text"> <span class="quote"> &#8220 </span> I dont feel nervous <br> in
+                            interviews <br> anymore. </h2>
                         <p class="testimonial-person">Will Pouller</p>
                         <p class="testimonial-desig">Student, NMIMS</p>
                     </div>
                 </div>
 
                 <div class="mySlides fade">
-                    <img src="images/Sign Up 4.png" style="width:100%">
+                    <img src={{ url_for('static', filename='images/SignUp4.png' ) }} style="width:100%">
                     <div class="testimonial">
-                        <h2 class="testimonial-text"> <span class="quote"> &#8220 </span> I got the top placement <br> package in my college <br> due to this application. </h2>
+                        <h2 class="testimonial-text"> <span class="quote"> &#8220 </span> I got the top placement <br>
+                            package in my college <br> due to this application. </h2>
                         <p class="testimonial-person">Jacob Blake</p>
                         <p class="testimonial-desig">Student, NMIMS</p>
                     </div>
                 </div>
 
                 <div class="mySlides fade">
-                    <img src="images/Sign Up 5.png" style="width:100%">
+                    <img src={{ url_for('static', filename='images/SignUp5.png' ) }} style="width:100%">
                     <div class="testimonial">
-                        <h2 class="testimonial-text"> <span class="quote"> &#8220 </span>My interview <br> repsonses are more <br> effective and accurate. </h2>
+                        <h2 class="testimonial-text"> <span class="quote"> &#8220 </span>My interview <br> repsonses are
+                            more <br> effective and accurate. </h2>
                         <p class="testimonial-person">Gwen Parker</p>
                         <p class="testimonial-desig">Student, NMIMS</p>
                     </div>
                 </div>
-            
+
                 <!-- Next and previous buttons -->
                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                 <a class="next" onclick="plusSlides(1)">&#10095;</a>
             </div>
-  
+
             <!-- <img src="./images/Log In.png" alt=""> -->
         </div>
 
@@ -73,7 +80,7 @@
             <div class="text-inner">
                 <h2>Create an account</h2>
                 <p class="enter">Please enter your details to get started</p>
-    
+
                 <form action="">
 
                     <div class="details">
@@ -85,20 +92,20 @@
                         <label for="email">Email <span class="asteric">&#42</span> </label>
                         <input type="email" placeholder="johndoe@organisation.com" id="email" required>
                     </div>
-        
-        
+
+
                     <div class="details">
                         <label for="password">Password <span class="asteric">&#42</span> </label>
                         <input type="password" placeholder="password" id="password" required>
                     </div>
-        
+
                     <button id="submit">
                         Submit
                     </button>
                 </form>
-    
+
                 <div class="tip">
-                    <p >Already have an account? <a href="login.html">Log in</a></p>
+                    <p>Already have an account? <a href="{{ url_for('index') }}">Log in</a></p>
                 </div>
             </div>
         </div>
@@ -121,14 +128,15 @@
         function showSlides(n) {
             let i;
             let slides = document.getElementsByClassName("mySlides");
-            if (n > slides.length) {slideIndex = 1}
-            if (n < 1) {slideIndex = slides.length}
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
             for (i = 0; i < slides.length; i++) {
                 slides[i].style.display = "none";
             }
-            
-            slides[slideIndex-1].style.display = "block";
+
+            slides[slideIndex - 1].style.display = "block";
         } 
     </script>
 </body>
+
 </html>
