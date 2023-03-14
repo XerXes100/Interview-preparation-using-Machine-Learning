@@ -1,61 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Practice</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Practice</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+  </head>
 
-<body>
-  <nav>
-    <div class="nav-title">
-      <h1>Practice</h1>
+  <body>
+    <nav>
+      <div class="nav-title">
+        <h1>Practice</h1>
+      </div>
+    </nav>
+
+    <div class="main-home">
+      <a href="{{ url_for('record') }}" class="yourself">
+        <div class="main-home-inner">
+          <img src={{ url_for('static', filename='images/Yourself.png' ) }} alt="">
+          <div class="text-prac">
+            <h2>Tell me about yourself.</h2>
+            <p>
+              Interviewers ask this at the beginning of an interview. A strong
+              and crisp response is required to make a good first impression.
+            </p>
+          </div>
+        </div>
+      </a>
+
+      <a href="{{ url_for('record') }}" class="strength">
+        <div class="main-home-inner">
+          <img src={{ url_for('static', filename="images/Strengths.png" ) }} alt="">
+          <div class="text-prac">
+            <h2>What are your strengths?</h2>
+            <p>
+              Highlight positive qualities about yourself that align with the
+              job description without bragging or boasting.
+            </p>
+          </div>
+        </div>
+      </a>
+
+      <a href="{{ url_for('record') }}" class="future">
+        <div class="main-home-inner">
+          <img src={{ url_for('static', filename="images/Future.png" ) }} alt="">
+          <div class="text-prac">
+            <h2>Where do you see yourself in the future?</h2>
+            <p>
+              Highlight positive qualities about yourself that align with the
+              job description without bragging or boasting.
+            </p>
+          </div>
+        </div>
+      </a>
     </div>
-  </nav>
-
-  <div class="main-home">
-    <a href="yourself.html" class="yourself">
-      <div class="main-home-inner">
-        <img src={{ url_for('static', filename='images/Yourself.png' ) }} alt="">
-        <div class="text-prac">
-          <h2>Tell me about yourself.</h2>
-          <p>
-            Interviewers ask this at the beginning of an interview. A strong
-            and crisp response is required to make a good first impression.
-          </p>
-        </div>
-      </div>
-    </a>
-
-    <a href="strength.html" class="strength">
-      <div class="main-home-inner">
-        <img src={{ url_for('static', filename="images/Strengths.png" ) }} alt="">
-        <div class="text-prac">
-          <h2>What are your strengths?</h2>
-          <p>
-            Highlight positive qualities about yourself that align with the
-            job description without bragging or boasting.
-          </p>
-        </div>
-      </div>
-    </a>
-
-    <a href="future.html" class="future">
-      <div class="main-home-inner">
-        <img src={{ url_for('static', filename="images/Future.png" ) }} alt="">
-        <div class="text-prac">
-          <h2>Where do you see yourself in the future?</h2>
-          <p>
-            Highlight positive qualities about yourself that align with the
-            job description without bragging or boasting.
-          </p>
-        </div>
-      </div>
-    </a>
-  </div>
-</body>
+  </body>
 
 </html>

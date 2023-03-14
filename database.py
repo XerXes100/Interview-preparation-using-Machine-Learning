@@ -10,19 +10,36 @@ mydb = mysql.connector.connect(
 cursor = mydb.cursor()
 
 
-def create_table():
+with open("static/images/Feedback.png", "rb") as f:
+        image_binary1 = f.read()
+        
+with open("static/images/Future.png", "rb") as f:
+    image_binary2 = f.read()
+    
+def create_tables():
+    
+    
+    # cursor.execute(
+    #     "CREATE TABLE IF NOT EXISTS users ( \
+    #         userID INT PRIMARY KEY, \
+    #         username VARCHAR (255), \
+    #         email VARCHAR(255), \
+    #         password VARCHAR(255), \
+    #         photo LONGBLOB NOT NULL, \
+    #         isLoggedIn BOOL \
+    #     );"
+    # )
+    
     cursor.execute(
         "CREATE TABLE IF NOT EXISTS users ( \
             userID INT PRIMARY KEY, \
             username VARCHAR (255), \
             email VARCHAR(255), \
             password VARCHAR(255), \
-            photo LONGBLOB NOT NULL, \
             isLoggedIn BOOL \
         );"
     )
-    # "CREATE TABLE IF NOT EXISTS movie_details(movie_id INT primary key,movie_name VARCHAR(20), genre VARCHAR(20), rating FLOAT, movie_release_date DATE,movie_duration VARCHAR(20),movie_description VARCHAR(500))")
-
+    
     cursor.execute(
         "CREATE TABLE IF NOT EXISTS questions ( \
             questionID INT PRIMARY KEY, \
@@ -70,12 +87,7 @@ def create_table():
 
 
 def entries():
-    sql_insert_user = "INSERT INTO users(userID, username, email, password, photo, isLoggedIn) VALUES(%s,%s,%s,%s,%s,%s)"
-    with open("static/images/Feedback.png", "rb") as f:
-        image_binary1 = f.read()
-        
-    with open("static/images/Future.png", "rb") as f:
-        image_binary2 = f.read()
+    sql_insert_user = "INSERT INTO users(userID, username, email, password, isLoggedIn) VALUES(%s,%s,%s,%s,%s)"
 
     user_vals = [
         (
@@ -99,50 +111,65 @@ def entries():
     # cursor.execute
     mydb.commit()
     print(cursor.rowcount, "were inserted")
+    
+def add_questions():
+    sql_insert_questions = "INSERT INTO questions(questionID, question, ideal_answer) VALUES(%s,%s,%s)"
+    qvalues = []
+    cursor.execute(sql_insert_questions, qvalues)
+    mydb.commit()
 
-    # sql_insert_booking = "INSERT INTO booking(movie_id,show_date,tickets_remaining,price,seat_type) VALUES(%s,%s,%s,%s,%s)"
-    # booking_vals = [
-    #     (100, "2021-04-10", 30, 150, "Silver"),
-    #     (100, "2021-04-10", 20, 200, "Gold"),
-    #     (101, "2021-04-10", 30, 150, "Silver"),
-    #     (101, "2021-04-10", 20, 200, "Gold"),
-    #     (102, "2021-04-10", 30, 160, "Silver"),
-    #     (102, "2021-04-10", 20, 200, "Gold"),
-    #     (103, "2021-04-10", 30, 160, "Silver"),
-    #     (103, "2021-04-10", 20, 220, "Gold"),
-    #     (104, "2021-04-10", 30, 180, "Silver"),
-    #     (104, "2021-04-10", 20, 220, "Gold"),
-    #     (105, "2021-04-10", 30, 180, "Silver"),
-    #     (105, "2021-04-10", 20, 230, "Gold"),
-    #     (100, "2021-04-11", 30, 170, "Silver"),
-    #     (100, "2021-04-11", 20, 250, "Gold"),
-    #     (101, "2021-04-11", 30, 170, "Silver"),
-    #     (101, "2021-04-11", 20, 250, "Gold"),
-    #     (102, "2021-04-11", 30, 180, "Silver"),
-    #     (102, "2021-04-11", 20, 250, "Gold"),
-    #     (103, "2021-04-11", 30, 180, "Silver"),
-    #     (103, "2021-04-11", 20, 260, "Gold"),
-    #     (104, "2021-04-11", 30, 190, "Silver"),
-    #     (104, "2021-04-11", 20, 260, "Gold"),
-    #     (105, "2021-04-11", 30, 190, "Silver"),
-    #     (105, "2021-04-11", 20, 270, "Gold"),
-    #     (100, "2021-04-12", 30, 170, "Silver"),
-    #     (100, "2021-04-12", 20, 250, "Gold"),
-    #     (101, "2021-04-12", 30, 170, "Silver"),
-    #     (101, "2021-04-12", 20, 250, "Gold"),
-    #     (102, "2021-04-12", 30, 180, "Silver"),
-    #     (102, "2021-04-12", 20, 250, "Gold"),
-    #     (103, "2021-04-12", 30, 180, "Silver"),
-    #     (103, "2021-04-12", 20, 260, "Gold"),
-    #     (104, "2021-04-12", 30, 190, "Silver"),
-    #     (104, "2021-04-12", 20, 260, "Gold"),
-    #     (105, "2021-04-12", 30, 190, "Silver"),
-    #     (105, "2021-04-12", 20, 270, "Gold"),
-    # ]
-    # cursor.executemany(sql_insert_booking, booking_vals)
-    # mydb.commit()
-    # print(cursor.rowcount, "were inserted")
+def fetch_entries():
+    cursor.execute("select * from users")
+    userRecords = cursor.fetchall()
+    for i in range(len(userRecords)):
+        print(userRecords[i])
+    
 
+def user_entry(username, email, password):
+    cursor = mydb.cursor(buffered=True)
+    cursor.execute("select * from users where email = %s", [email])
+    
+    if cursor.rowcount == 0:
+        cursor.execute("select * from users order by userID DESC LIMIT 1")
+        last_user = cursor.fetchall()
+        
+        user_id = 1
+        
+        for row in last_user:
+            last_user_id = row[0]
+            user_id = int(str(last_user_id)) + 1
+        
+        loginValue = True
+        
+        sql_insert_user = f"INSERT INTO users(userID, username, email, password, isLoggedIn) VALUES \
+            (%s, %s, %s, %s, %s);"
+        
+        values = [user_id, username, email, password, loginValue]
+        
+        cursor.execute(sql_insert_user, values)
 
-create_table()
-entries()
+        mydb.commit()
+        return "Value inserted"
+    else:
+        return "Value exists"
+        
+
+def fetch_entry(email, password):
+    
+    fetch_user = f"SELECT * FROM users WHERE email = %s and password = %s;"
+    fetch_values = [email, password]
+    cursor.execute(fetch_user, fetch_values)
+    userRecords = cursor.fetchall()
+    
+    print(userRecords)
+
+    if (len(userRecords) == 1):
+        (userID_fetched, username_fetched, email_fetched, password_fetched, isLoggedIn) = userRecords[0]
+        return username_fetched
+    else:
+        return "INVALID ENTRY"
+
+# create_tables()
+# entries()
+# fetch_entries()
+# add_questions()

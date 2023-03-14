@@ -4,11 +4,23 @@ import speech_recognition as sr1
 # import mutagen
 # from mutagen.wave import WAVE
 import nlp
+# import speech_text
+
+import ssl
+
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    # Legacy Python that doesn't verify HTTPS certificates by default
+    pass
+else:
+    # Handle target environment that doesn't support HTTPS verification
+    ssl._create_default_https_context = _create_unverified_https_context
 
 r = sr1.Recognizer()
 
 samplerate = 44100  # Hertz
-duration = 15 # seconds
+duration = 10 # seconds
 filename = 'output.wav'
 
 
@@ -20,15 +32,12 @@ sf.write(filename, mydata, samplerate)
 hellow = sr1.AudioFile('output.wav')
 with hellow as source:
     audio = r.record(source)
-s = r.recognize_google(audio)
-
-print(s)
-
-# punc_text=nlp.punctuation(s)
-# print(punc_text)
-sent = nlp.lemmatization(s)
-# print(sent)
-print(nlp.sentiment_analysis(sent))
-print(nlp.entity_analysis(sent))
-
-print(nlp.confidence_analysis(filename))
+# s = r.recognize_google(audio)
+# audio_url = speech_text.upload(filename)
+if __name__ == '__main__':
+    import speech_text
+    audio_url = speech_text.upload(filename)
+    s,t=speech_text.save_transcript(audio_url, 'file_title', sentiment_analysis=True)
+    print(s)
+    print(nlp.entity_analysis_q1(s))
+    print("confidence analysis:",t)

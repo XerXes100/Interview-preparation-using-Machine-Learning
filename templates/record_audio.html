@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Record Audio</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+
+    <body>
+        <h1>Record Audio</h1>
+        <div class="container">
+            <div class="button-container">
+                <button id="record-btn">Record</button>
+                <button id="stop-btn">Stop</button>
+                <button id="play-btn">Play</button>
+            </div>
+            <audio id="audio-recorder"></audio>
+        </div>
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+    </body>
+
+</html>
