@@ -5,6 +5,12 @@ import mysql.connector
 from flask import request
 import database
 from werkzeug.utils import secure_filename
+import sounddevice as sd
+import soundfile as sf
+import speech_recognition as sr1
+import nlp
+import json
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -30,9 +36,12 @@ def index():
         email = request.form.get("email")
         password = request.form.get("password")
         
-        username_fetched = database.fetch_entry(email=email, password=password)
-        print(username_fetched)
-        return render_template('home.html', username=username_fetched)
+        user_data = database.fetch_entry(email=email, password=password)
+        print(user_data)
+        json_object = json.dumps(user_data, indent=5)
+        with open("user.json", "w") as outfile:
+            outfile.write(json_object)
+        return render_template('home.html', username=user_data["username"])
     else:
         return render_template("login.html")
 
@@ -66,23 +75,41 @@ def practice():
 
 @app.route("/record", methods=['GET', 'POST'])
 def record():
-    if request.method == 'POST':
-        if 'audio_data' not in request.files:
-            flash('No file part')
-            return render_template('practice.html')
-        file = request.files['audio_data']
-        # Check if a file was selected
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        # Generate a secure filename and save the uploaded file to the upload folder
-        filename = secure_filename(file.filename if file.filename else 'default_audio.wav')
-        file.save(os.path.join(app.config['recordings'], filename))
-        # Display a message indicating the file was uploaded successfully
-        flash('File uploaded successfully')
+    transcript = ""
+    if request.method == "POST" and "record_audio" in request.form:
+        
+        r = sr1.Recognizer()
+
+        samplerate = 44100  # Hertz
+        duration = 10 # seconds
+        filename = 'output.wav'
+
+        print("\n")
+        print("Start talking:")
+        # mydata = sd.rec(int(samplerate * duration), samplerate=samplerate, channels=1, blocking=True)
+        # sf.write(filename, mydata, samplerate)
+        hellow = sr1.AudioFile('output.wav')
+        with hellow as source:
+            audio = r.record(source)
+        import speech_text
+        audio_url = speech_text.upload(filename)
+        s,t=speech_text.save_transcript(audio_url, 'file_title', sentiment_analysis=True)
+        print(s)
+        transcript = s
+        print(nlp.entity_analysis_q1(s))
+        print("confidence analysis:",t)
+        return render_template('record_audio.html', transcript=s)
+    elif request.method == "POST" and "submit_btn" in request.form:
+        
+        now = datetime.now()
+
+        current_date = now.date()
+        current_time = now.time()
+        database.add_response(transcript, current_date, current_time)
+        
         return render_template("practice.html")
     else:
-        return render_template("record_audio.html")
+        return render_template('record_audio.html')
 
 @app.route("/review")
 def review():

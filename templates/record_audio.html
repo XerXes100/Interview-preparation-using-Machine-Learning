@@ -8,16 +8,29 @@
     </head>
 
     <body>
-        <h1>Record Audio</h1>
-        <div class="container">
-            <div class="button-container">
-                <button id="record-btn">Record</button>
-                <button id="stop-btn">Stop</button>
-                <button id="play-btn">Play</button>
+
+        <div id="speechContainer">
+            <h1>Upload new File</h1>
+            <form method="post" enctype="multipart/form-data">
+                <!-- <input type="file" name="file" /> -->
+                <!-- <br> -->
+                <input name="record_audio" type="submit" id="submitButton" value="Record Audio" />
+            </form>
+
+            {% if transcript != "" %}
+            <div id="speechTranscriptContainer">
+                <h1>Transcript</h1>
+                <p id="speechText">{{ transcript }}</p>
             </div>
-            <audio id="audio-recorder"></audio>
+            <form method="post">
+                <input type="text" value={{transcript}}>
+                <input name="submit_btn" type="submit" id="submitButton" value="Submit" />
+            </form>
+            {% endif %}
         </div>
-        <script src="{{ url_for('static', filename='script.js') }}"></script>
+
     </body>
+
+
 
 </html>

@@ -75,19 +75,3 @@ def save_transcript(url, title, sentiment_analysis=False):
     #     print('Transcript saved')
     # elif error:
     #     print("Error!!!", error)
-
-
-import requests
-
-# from api_02 import *
-
-filename = "output.wav"
-audio_url = upload(filename)
-
-
-
-s, t = save_transcript(audio_url, 'file_title', sentiment_analysis=True)
-# print(nlp.entity_analysis(s))
-print(s)
-print(nlp.entity_analysis_q1(s))
-print(t)
