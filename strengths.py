@@ -9,23 +9,16 @@ def extract_strengths(text):
     doc = nlp(text)
 
     # Define a list of strength keywords
-    # strengths = ['strong', 'talented', 'skilled', 'knowledgeable', 'experienced', 'proficient', 'capable', 'competent',
-    #              'gifted', 'resourceful', 'creative', 'innovative', 'dedicated', 'reliable', 'responsible', 'organized',
-    #              'efficient', 'productive', 'motivated', 'confident', 'positive', 'adaptable', 'flexible',
-    #              'open-minded', 'collaborative', 'communicative', 'empathetic']
-    strengths = ["Excellent communication skills", "Strong problem-solving abilities", "Leadership skills",
-                           "Teamwork and collaboration", "Adaptability and flexibility", "Attention to detail",
-                           "Ability to learn quickly", "Innovation and creativity",
-                           "Strong work ethic and time management", "Positive attitude and enthusiasm",
-                           "Effective decision-making", "Customer service orientation", "Organizational skills",
-                           "Ability to work under pressure", "Strategic thinking", "Interpersonal skills",
-                           "Conflict resolution", "Negotiation skills", "Critical thinking", "Analytical skills",
-                           "Project management", "Data analysis and interpretation", "Self-motivation", "Networking",
-                           "Mentoring and coaching", "Public speaking", "Financial acumen", "Sales and marketing",
-                           "Risk management", "Multitasking", "Initiative and proactivity", "Cultural sensitivity",
-                           "Empathy", "Resilience", "Problem identification", "Research and development", "Creativity",
-                           "Technical proficiency", "Emotional intelligence", "Collaborative decision-making",
-                           "Active listening"]
+    strengths = ['ambitious', 'analytical', 'assertive', 'attentive', 'authentic', 'charismatic', 'communicative',
+                 'compassionate', 'confident', 'conscientious', 'creative', 'decisive', 'determined', 'disciplined',
+                 'dynamic', 'empathetic', 'energetic', 'enthusiastic', 'flexible', 'focused', 'friendly', 'generous',
+                 'helpful', 'honest', 'independent', 'innovative', 'insightful', 'intelligent', 'kind', 'knowledgeable',
+                 'loyal', 'motivated', 'optimistic', 'organized', 'patient', 'persuasive', 'positive', 'proactive',
+                 'productive', 'reliable', 'resilient', 'resourceful', 'self-assured', 'self-disciplined',
+                 'self-motivated', 'sincere', 'strategic', 'strong', 'team-oriented', 'tenacious']
+
+    strengths = [x.lower() for x in strengths]
+    # print(strengths)
 
     # Initialize empty lists for strengths and their examples
     strength_examples = {}
@@ -34,10 +27,13 @@ def extract_strengths(text):
     # Iterate over each sentence in the document
     for sentence in doc.sents:
         # Iterate over each word in the sentence
+        # print("1")
         for word in sentence:
             # Check if the word is a strength keyword
+            # print("2")
             if word.text.lower() in strengths:
                 # Add the strength to the list of extracted strengths
+
                 extracted_strengths.append(word.text.capitalize())
 
                 # Iterate over the sentence again to find examples related to the strength
@@ -64,7 +60,10 @@ def extract_strengths(text):
     return tuple([extracted_strengths[:3], strength_examples])
 
 
-text = "I'm a detail-oriented person, and have strong problem-solving skills. For example, I was able to resolve a complex issue by breaking it down into smaller parts and tackling each one systematically. I'm also a great communicator and have excellent interpersonal skills. Like, I was able to effectively lead a cross-functional team to complete a project on time and within budget."
+text = "I'm a detail-oriented person, and have strong problem-solving skills. For example, I was able to resolve a " \
+       "complex issue by breaking it down into smaller parts and tackling each one systematically. I'm also a great " \
+       "communicator and have excellent interpersonal skills. Like, I was able to effectively lead a cross-functional " \
+       "team to complete a project on time and within budget. "
 
 result = extract_strengths(text)
 
@@ -81,4 +80,6 @@ for strength in extracted_strengths:
     print(f"  Usage: {strength_examples[strength]['usage']}")
     print()
 # else:
-#     print("Less than 3 strengths were extracted.")
+#     print("Less than 3 strengths were extracted.")`
+
+
