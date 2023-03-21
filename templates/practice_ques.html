@@ -1,27 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Practice</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Practice</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
 
-</head>
+    </head>
 
-<body>
-    <nav>
-        <div class="nav-title">
-            <h1> Practice </h1>
-        </div>
-    </nav>
+    <body>
+        <nav>
+            <div class="nav-title">
+                <h1> Practice </h1>
+            </div>
+        </nav>
 
-    <div class="main-home" id="question">
+        <div class="main-home">
 
-        <h2>What are your strengths?</h2>
-        <h3>Tips to answer this question</h3>
-    </div>
-</body>
+            <div class="practice practice1" style="align-items: flex-start;">
+                <div class="main-home-inner practice-ques ">
+                    <div class="text">
+                        <h2>What are your stengths? </h2>
+                        <h4>Tips to answer this question: </h4>
+                        <ul>
+                            <li style="margin: 5px 0px;">Make a list of all your strengths</li>
+                            <li>Make a list of all your strengths</li>
+                            <li>Make a list of all your strengths</li>
+                            <li>Make a list of all your strengths</li>
+                            <li>Make a list of all your strengths</li>
+                        </ul>
+                    </div>
+                </div>
+                </a>
+            </div>
+
+            <div class="review">
+                <div class="main-home-inner practice-ques review1">
+                    <div class="text">
+                        <textarea name="response" id="" rows="15"> {{transcript}}</textarea>
+                        <div class="buttons">
+                            <form method="post" action="">
+                                <button name="Record" class="review-record" type="submit" value="Record">Record</button>
+                            </form>
+                            <form method="post">
+                                <button name="Submit_Answer" class="review-submit" type="submit"
+                                    value="Submit_Answer">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+    </body>
 
 </html>

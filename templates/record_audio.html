@@ -17,16 +17,17 @@
                 <input name="record_audio" type="submit" id="submitButton" value="Record Audio" />
             </form>
 
-            {% if transcript != "" %}
+            <!-- {% if transcript != "" %} -->
             <div id="speechTranscriptContainer">
                 <h1>Transcript</h1>
                 <p id="speechText">{{ transcript }}</p>
             </div>
             <form method="post">
-                <input type="text" value={{transcript}}>
-                <input name="submit_btn" type="submit" id="submitButton" value="Submit" />
+                <input type="text" value="{{transcript}}"">
+                <br>
+                <input name=" submit_btn" type="submit" id="submitButton" value="Submit" />
             </form>
-            {% endif %}
+            <!-- {% endif %} -->
         </div>
 
     </body>

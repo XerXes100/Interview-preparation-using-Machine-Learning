@@ -17,8 +17,18 @@ with open("static/images/Feedback.png", "rb") as f:
 with open("static/images/Future.png", "rb") as f:
     image_binary2 = f.read()
     
-def create_tables():
+def create_table_users():
+    cursor.execute(
+        "CREATE TABLE IF NOT EXISTS users ( \
+            userID INT PRIMARY KEY, \
+            username VARCHAR (255), \
+            email VARCHAR(255), \
+            password VARCHAR(255), \
+            isLoggedIn BOOL \
+        );"
+    )
     
+def create_table_questions():
     
     # cursor.execute(
     #     "CREATE TABLE IF NOT EXISTS users ( \
@@ -31,15 +41,7 @@ def create_tables():
     #     );"
     # )
     
-    cursor.execute(
-        "CREATE TABLE IF NOT EXISTS users ( \
-            userID INT PRIMARY KEY, \
-            username VARCHAR (255), \
-            email VARCHAR(255), \
-            password VARCHAR(255), \
-            isLoggedIn BOOL \
-        );"
-    )
+    
     
     cursor.execute(
         "CREATE TABLE IF NOT EXISTS questions ( \
@@ -49,27 +51,14 @@ def create_tables():
         );"
     )
 
-    # cursor.execute(
-    #     "CREATE TABLE IF NOT EXISTS responses ( \
-    #         responseID INT PRIMARY KEY, \
-    #         userID INT, \
-    #         questionID INT, \
-    #         response_text VARCHAR(1000), \
-    #         response_audio BLOB, \
-    #         feedback VARCHAR(1000), \
-    #         date DATE, \
-    #         time TIME, \
-    #         CONSTRAINT fk1 FOREIGN KEY (userID) REFERENCES users(userID) ON UPDATE CASCADE ON DELETE CASCADE, \
-    #         CONSTRAINT fk2 FOREIGN KEY (questionID) REFERENCES questions(questionID) ON UPDATE CASCADE ON DELETE CASCADE \
-    #     );"
-    # )
-    
+def create_table_responses():
     cursor.execute(
         "CREATE TABLE IF NOT EXISTS responses ( \
             responseID INT PRIMARY KEY, \
             userID INT, \
             questionID INT, \
             response_text VARCHAR(1000), \
+            response_audio LONGBLOB, \
             feedback VARCHAR(1000), \
             date DATE, \
             time TIME, \
@@ -77,7 +66,22 @@ def create_tables():
             CONSTRAINT fk2 FOREIGN KEY (questionID) REFERENCES questions(questionID) ON UPDATE CASCADE ON DELETE CASCADE \
         );"
     )
+    
+    # cursor.execute(
+    #     "CREATE TABLE IF NOT EXISTS responses ( \
+    #         responseID INT PRIMARY KEY, \
+    #         userID INT, \
+    #         questionID INT, \
+    #         response_text VARCHAR(1000), \
+    #         feedback VARCHAR(1000), \
+    #         date DATE, \
+    #         time TIME, \
+    #         CONSTRAINT fk1 FOREIGN KEY (userID) REFERENCES users(userID) ON UPDATE CASCADE ON DELETE CASCADE, \
+    #         CONSTRAINT fk2 FOREIGN KEY (questionID) REFERENCES questions(questionID) ON UPDATE CASCADE ON DELETE CASCADE \
+    #     );"
+    # )
 
+def create_table_output():
     cursor.execute(
         "CREATE TABLE IF NOT EXISTS output ( \
             outputID INT PRIMARY KEY, \
@@ -212,9 +216,7 @@ def fetch_entry(email, password):
 
 def add_response(response, current_date, current_time):
     f = open('user.json')
-
     data = json.load(f)
-    
     f.close()
     
     feedback_text = "Kuch bi bai"
@@ -233,21 +235,26 @@ def add_response(response, current_date, current_time):
      
     # return binary_data
     
+    with open("output.wav", 'rb') as file:
+        binaryData = file.read()
+    
     sql_insert_response = f"INSERT INTO responses(\
         responseID, \
         userID, \
         questionID, \
         response_text, \
+        response_audio, \
         feedback, \
         date, \
         time) VALUES \
-        (%s, %s, %s, %s, %s, %s, %s);"
+        (%s, %s, %s, %s, %s, %s, %s, %s);"
     
     response_values = [
         response_id,
         data["userID"],
         1,
         response,
+        binaryData,
         feedback_text,
         current_date,
         current_time
@@ -258,7 +265,7 @@ def add_response(response, current_date, current_time):
     mydb.commit()
     print("Response added successfully")
 
-def check_responses():
+def fetch_responses():
     cursor.execute("select * from responses")
     userRecords = cursor.fetchall()
     for i in range(len(userRecords)):
@@ -270,4 +277,6 @@ def check_responses():
 # entries()
 # fetch_entries()
 # add_questions()
-# check_responses()
+# fetch_responses()
+# create_table_responses()
+

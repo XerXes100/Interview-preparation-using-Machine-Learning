@@ -76,7 +76,7 @@ def practice():
 @app.route("/record", methods=['GET', 'POST'])
 def record():
     transcript = ""
-    if request.method == "POST" and "record_audio" in request.form:
+    if request.method == "POST" and request.form.get("Record") == "Record":
         
         r = sr1.Recognizer()
 
@@ -98,8 +98,8 @@ def record():
         transcript = s
         print(nlp.entity_analysis_q1(s))
         print("confidence analysis:",t)
-        return render_template('record_audio.html', transcript=s)
-    elif request.method == "POST" and "submit_btn" in request.form:
+        return render_template('practice_ques.html', transcript=s)
+    elif request.method == "POST" and request.form.get("Submit_Answer") == "Submit_Answer":
         
         now = datetime.now()
 
@@ -109,7 +109,7 @@ def record():
         
         return render_template("practice.html")
     else:
-        return render_template('record_audio.html')
+        return render_template('practice_ques.html')
 
 @app.route("/review")
 def review():
@@ -124,8 +124,8 @@ def profile():
 @app.route("/logout")
 def logout():
     cursor.execute("select * from users where email = %s", [])
+    
     return render_template('login.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
-    # profile()
