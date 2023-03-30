@@ -17,9 +17,9 @@
     </nav>
 
     <div class="main-home">
-      <a href="{{ url_for('record') }}" class="yourself">
+      <a href="{{ url_for('recordQuestion', questionID = 1) }}" class="yourself">
         <div class="main-home-inner">
-          <img src={{ url_for('static', filename='images/Yourself.png' ) }} alt="">
+          <img src="{{ url_for('static', filename='images/Yourself.png' ) }}" alt="">
           <div class="text-prac">
             <h2>Tell me about yourself.</h2>
             <p>
@@ -30,7 +30,7 @@
         </div>
       </a>
 
-      <a href="{{ url_for('record') }}" class="strength">
+      <a href="{{ url_for('recordQuestion', questionID = 2) }}" class="strength">
         <div class="main-home-inner">
           <img src={{ url_for('static', filename="images/Strengths.png" ) }} alt="">
           <div class="text-prac">
@@ -43,7 +43,7 @@
         </div>
       </a>
 
-      <a href="{{ url_for('record') }}" class="future">
+      <a href="{{ url_for('recordQuestion', questionID = 3) }}" class="future">
         <div class="main-home-inner">
           <img src={{ url_for('static', filename="images/Future.png" ) }} alt="">
           <div class="text-prac">
