@@ -129,7 +129,7 @@ def detect_stutter(audio_file):
         return "Yes"
     else:
         return "No"
-def get_audio_pace(audio_file_path):
+def get_audio_pace(audio_file_path,s):
     r = sr.Recognizer()
 
     # with sr.AudioFile(audio_file_path) as source:
@@ -137,9 +137,9 @@ def get_audio_pace(audio_file_path):
     #
     # try:
 
-    audio_url = speech_text.upload(audio_file_path)
-    s, t = speech_text.save_transcript(audio_url, 'file_title', sentiment_analysis=True)
-    print(s)
+    # audio_url = speech_text.upload(audio_file_path)
+    # s, t = speech_text.save_transcript(audio_url, 'file_title', sentiment_analysis=True)
+    # print(s)
 
     with wave.open(audio_file_path, 'rb') as wave_file:
         frame_rate = wave_file.getframerate()

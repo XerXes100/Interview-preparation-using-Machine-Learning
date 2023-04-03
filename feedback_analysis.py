@@ -1,3 +1,9 @@
+import nlp
+import speech_text
+
+filename = 'output.wav'
+
+
 def sentiment_find(t):
     pos, neu, neg = 0, 0, 0
     for i in t:
@@ -28,12 +34,19 @@ def miss_entity_q1(entity):
     y = set(ideal_ent) ^ set(entity)
     print(y)
 
-def pauses():
-    pass
+
+pauses_count=nlp.pauses(filename)
+
 
 def pace():
-    pass
+    audio_url = speech_text.upload(filename)
+    s, t = speech_text.save_transcript(audio_url, 'file_title', sentiment_analysis=True)
+    # print(s)
+    pace_result = nlp.get_audio_pace(filename, s)
+    return pace_result
 
+
+stutter_find = nlp.detect_stutter(filename)
 
 
 

@@ -32,5 +32,6 @@ if __name__ == '__main__':
     print(s)
     y=nlp.entity_analysis_q1(s)
     print(y)
+    nlp.get_audio_pace(filename,s)
     # print(nlp.get_audio_pace(filename))
     # print("confidence analysis:", t[1]['sentiment'])
