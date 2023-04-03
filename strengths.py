@@ -15,7 +15,11 @@ def extract_strengths(text):
                  'helpful', 'honest', 'independent', 'innovative', 'insightful', 'intelligent', 'kind', 'knowledgeable',
                  'loyal', 'motivated', 'optimistic', 'organized', 'patient', 'persuasive', 'positive', 'proactive',
                  'productive', 'reliable', 'resilient', 'resourceful', 'self-assured', 'self-disciplined',
-                 'self-motivated', 'sincere', 'strategic', 'strong', 'team-oriented', 'tenacious']
+                 'self-motivated', 'sincere', 'strategic', 'strong', 'team-oriented', 'tenacious','strength', 'skill', 'ability', 'strong', 'talented', 'knowledgeable', 'experienced', 'proficient',
+                  'capable', 'competent', 'gifted', 'resourceful', 'creative', 'innovative', 'dedicated', 'reliable', 'responsible',
+                  'organized', 'efficient', 'productive', 'motivated', 'confident', 'positive', 'adaptable', 'flexible', 'hard work',
+                 'open minded', 'collaborative', 'communicative', 'empathetic', 'trustworthy', 'discipline', 'patient', 'honest', 'determined',
+                  'detail oriented', 'versatile', 'problem solver', 'go getter', 'opportunistic', 'teamwork', 'collaboration', 'active listener']
 
     strengths = [x.lower() for x in strengths]
     # print(strengths)

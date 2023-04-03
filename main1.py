@@ -30,14 +30,7 @@ if __name__ == '__main__':
     audio_url = speech_text.upload(filename)
     s, t = speech_text.save_transcript(audio_url, 'file_title', sentiment_analysis=True)
     print(s)
-    print(nlp.entity_analysis_q1(s))
+    y=nlp.entity_analysis_q1(s)
+    print(y)
+    # print(nlp.get_audio_pace(filename))
     # print("confidence analysis:", t[1]['sentiment'])
-    pos, neu, neg = 0, 0, 0
-    for i in t:
-        if i['sentiment'] == 'POSITIVE':
-            pos += 1
-        elif i['sentiment'] == 'NEUTRAL':
-            neu += 1
-        else:
-            neg += 1
-    print(pos,neu,neg)

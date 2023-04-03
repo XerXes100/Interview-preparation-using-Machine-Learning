@@ -42,7 +42,7 @@ def entity_analysis_q1(transcript):
     # for entity in doc.ents:
     #     print(entity.text, entity.label_)
     ents = [(e.text, e.start_char, e.end_char, e.label_) for e in doc.ents]
-    print(ents)
+    return ents
 
 
 def entity_analysis_q2(transcript):
@@ -86,24 +86,7 @@ def pauses(audio_file):
     return len(pause_ranges)
 
 
-# def lemmatization(transcript):
-#     sentences = nltk.sent_tokenize(transcript)
-#     lemmatizer = WordNetLemmatizer()
-#     for i in range(len(sentences)):
-#         words = nltk.word_tokenize(sentences[i])
-#         # words = [lemmatizer.lemmatize(word) for word in words if word not in set(stopwords.words('english'))]
-#         sentences[i] = ' '.join(words)
-#     listToStr = ' '.join([str(elem) for elem in sentences])
-#     return listToStr
 
-
-# def punctuation(transcript):
-#     # model = PunctuationModel()
-#     # result = model.restore_punctuation(transcript)
-#     # return result
-#     p = Punctuator('INTERSPEECH-T-BRNN.pcl')
-#     text_audio_punc = p.punctuate(transcript)
-#     return text_audio_punc
 
 # def confidence_analysis(audio_path):
 #     sr, audio = wavfile.read(audio_path)
@@ -165,7 +148,7 @@ def get_audio_pace(audio_file_path):
     duration = num_frames / float(frame_rate)  # calculate the duration of the audio file in seconds
     num_words = len(s.split())  # get the number of words spoken in the audio file
     pace = num_words / (duration / 60)  # calculate the pace in WPM
-
+    print(pace)
     if pace > 120:
         return "The audio is too fast. You may want to slow down the pace."
     elif pace < 80:
