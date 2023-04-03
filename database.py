@@ -4,7 +4,7 @@ import json
 mydb = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="MySQLShell@900",  # Change password according to system
+    password="sang123",  # Change password according to system
     database="interview_preparation",
 )
 
@@ -310,5 +310,9 @@ def fetch_current_user_responses():
 # add_questions()
 # fetch_responses()
 # create_table_responses()
+# create_table_users()
+# create_table_questions()
+# create_table_responses()
+# create_table_output()
 
-fetch_current_user_responses()
+# fetch_current_user_responses()
