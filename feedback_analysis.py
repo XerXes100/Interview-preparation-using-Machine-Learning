@@ -9,6 +9,8 @@ import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 
 filename = 'output.wav'
+audio_url = speech_text.upload(filename)
+s, t = speech_text.save_transcript(audio_url, 'file_title', sentiment_analysis=True)
 
 
 def sentiment_find(t):
@@ -45,7 +47,7 @@ def entity_highlight_q2(text):
 
 
 def entity_highlight_q1(text):
-    nlp1 = spacy.load(r"output1/model-best")
+    nlp1 = spacy.load(r"output/model-best")
     doc = nlp1(text)
     colors = {'Name': "#85C1E9", 'Position': '#74992e', 'Organization': '#FF6000', 'Degree': '#B3C99C',
               'Interest': '#159895', 'Quality': '#FEFF86', 'Goals': '#27E1C1'}
@@ -72,11 +74,8 @@ def miss_entity_q1(entity):
 pauses_count = nlp.pauses(filename)
 
 
-def pace():
-    audio_url = speech_text.upload(filename)
-    s, t = speech_text.save_transcript(audio_url, 'file_title', sentiment_analysis=True)
-    # print(s)
-    pace_result,pace = nlp.get_audio_pace(filename, s)
+def pace(speech):
+    pace_result, pace = nlp.get_audio_pace(filename, speech)
 
     fig = go.Figure(go.Indicator(
         domain={'x': [0, 1], 'y': [0, 1]},
@@ -95,5 +94,5 @@ def pace():
     return pace_result
 
 
-stutter_find = nlp.detect_stutter(filename)
-print(pace())
+# stutter_find = nlp.detect_stutter(filename)
+entity_highlight_q2(s)
