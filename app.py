@@ -125,21 +125,43 @@ def recordQuestion(questionID):
 @app.route("/review")
 def review():
     database.fetch_current_user_responses()
-    return render_template("review.html")
-
-
-# @app.route("/profile")
-def profile():
-    cursor.execute("Select * from users where emailID = %s", ("emailID"))
-    userDetails = cursor.fetchall()
-    print(userDetails)
+    f = open("responses.json")
+    data = json.load(f)
+    return render_template("review.html", responses=data)
 
 
 @app.route("/feedback")
 def feedback():
+    return render_template("feedback.html")
+
+
+@app.route("/feedbackData/<getResponseFromJson>")
+def feedbackData(getResponseFromJson):
     g = open("user.json")
-    data = json.load(g)
-    return render_template("feedback.html", username=data["username"])
+    userData = json.load(g)
+
+    h = open("questions.json")
+    questionData = json.load(h)
+
+    k = open("responses.json")
+    responseData = json.load(k)
+
+    print(questionData)
+    print(getResponseFromJson)
+    print(responseData[getResponseFromJson])
+
+    new_response_json_string = responseData[getResponseFromJson]
+
+    userResponseFeedback = {
+        "username": userData["username"],
+        "question": questionData[str(new_response_json_string["questionID"])],
+        "responseText": new_response_json_string["response_text"],
+        "feedback": new_response_json_string["feedback"],
+        "date": new_response_json_string["date"],
+        "time": new_response_json_string["time"],
+    }
+
+    return render_template("feedback.html", responseData=userResponseFeedback)
 
 
 @app.route("/logout")

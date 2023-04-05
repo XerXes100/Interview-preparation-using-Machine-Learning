@@ -284,8 +284,9 @@ def fetch_current_user_responses():
     sql_fetch_query = "select * from responses where userID = " + str(data["userID"])
     cursor.execute(sql_fetch_query)
     userRecords = cursor.fetchall()
+    new_json[0] = len(userRecords)
     for i in range(len(userRecords)):
-        print(userRecords[i])
+        # print(userRecords[i])
         new_entry = list(userRecords[i])
         temp = {
             "responseID": new_entry[0],
@@ -302,6 +303,8 @@ def fetch_current_user_responses():
         json_dicts = json.dumps(new_json, default=str)
         json_file.write(json_dicts)
 
+    return userRecords
+
 
 # create_tables()
 # add_questions()
@@ -311,4 +314,4 @@ def fetch_current_user_responses():
 # fetch_responses()
 # create_table_responses()
 
-fetch_current_user_responses()
+# fetch_current_user_responses()

@@ -56,4 +56,4 @@ def pace():
     return pace_result
 
 
-stutter_find = nlp.detect_stutter(filename)
+# stutter_find = nlp.detect_stutter(filename)
