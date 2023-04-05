@@ -96,3 +96,4 @@ def pace():
 
 
 stutter_find = nlp.detect_stutter(filename)
+print(pace())
