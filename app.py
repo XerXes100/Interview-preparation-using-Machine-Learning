@@ -91,8 +91,8 @@ def recordQuestion(questionID):
 
         print("\n")
         print("Start talking:")
-        # mydata = sd.rec(int(samplerate * duration), samplerate=samplerate, channels=1, blocking=True)
-        # sf.write(filename, mydata, samplerate)
+        mydata = sd.rec(int(samplerate * duration), samplerate=samplerate, channels=1, blocking=True)
+        sf.write(filename, mydata, samplerate)
         hellow = sr1.AudioFile("output.wav")
         with hellow as source:
             audio = r.record(source)
