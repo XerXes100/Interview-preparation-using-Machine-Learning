@@ -86,8 +86,6 @@ def pauses(audio_file):
     return len(pause_ranges)
 
 
-
-
 # def confidence_analysis(audio_path):
 #     sr, audio = wavfile.read(audio_path)
 #     time, frequency, confidence, activation = crepe.predict(audio, sr, viterbi=True)
@@ -96,7 +94,7 @@ def pauses(audio_file):
 #     print('average',sum(confidence)*100/len(confidence))
 
 
-def detect_stutter(audio_file):
+def detect_stutter(audio_file, limit=2):
     # Load the audio file
     y, sr = librosa.load(audio_file, sr=None)
 
@@ -124,12 +122,16 @@ def detect_stutter(audio_file):
     threshold = 3 * np.mean(distances)
     stutter = np.where(distances > threshold)[0]
 
-    # Return "Yes" if stutter is detected and "No" otherwise
-    if stutter.size > 0:
-        return "Yes"
-    else:
-        return "No"
-def get_audio_pace(audio_file_path,s):
+    # Limit the number of stutters if specified
+    if limit is not None and stutter.size > limit:
+        stutter = stutter[:limit]
+
+    # Return the number of stutters found
+    num_stutters = stutter.size
+    return num_stutters
+
+
+def get_audio_pace(audio_file_path, s):
     r = sr.Recognizer()
 
     # with sr.AudioFile(audio_file_path) as source:
@@ -148,10 +150,10 @@ def get_audio_pace(audio_file_path,s):
     duration = num_frames / float(frame_rate)  # calculate the duration of the audio file in seconds
     num_words = len(s.split())  # get the number of words spoken in the audio file
     pace = num_words / (duration / 60)  # calculate the pace in WPM
-    print(pace)
+    # print(pace)
     if pace > 200:
-        return "The audio is too fast. You may want to slow down the pace."
+        return "The audio is too fast. You may want to slow down the pace.", pace
     elif pace < 120:
-        return "The audio is too slow. You may want to increase the pace."
+        return "The audio is too slow. You may want to increase the pace.", pace
     else:
-        return "The pace of the audio is just right."
+        return "The pace of the audio is just right.", pace

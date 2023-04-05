@@ -1,24 +1,15 @@
-import wave
-import speech_recognition as sr
-import speech_text
+import plotly.graph_objects as go
 
-def get_audio_pace(audio_file_path):
-    r = sr.Recognizer()
-    audio_url = speech_text.upload(audio_file_path)
-    s, t = speech_text.save_transcript(audio_url, 'file_title', sentiment_analysis=True)
-    print(s)
+fig = go.Figure(go.Indicator(
+    domain = {'x': [0, 1], 'y': [0, 1]},
+    value = 450,
+    mode = "gauge+number+delta",
+    title = {'text': "WPM"},
+    delta = {'reference': 120},
+    gauge = {'axis': {'range': [None, 250]},
+             'steps' : [
+                 {'range': [0, 125], 'color': "lightgray"},
+                 {'range': [100, 250], 'color': "gray"}],
+             'threshold' : {'line': {'color': "red", 'width': 4}, 'thickness': 0.75, 'value': 200}}))
 
-    with wave.open(audio_file_path, 'rb') as wave_file:
-        frame_rate = wave_file.getframerate()
-        num_frames = wave_file.getnframes()
-
-    duration = num_frames / float(frame_rate)  # calculate the duration of the audio file in seconds
-    num_words = len(s.split())  # get the number of words spoken in the audio file
-    pace = num_words / (duration / 60)  # calculate the pace in WPM
-    print(pace)
-    if pace > 120:
-        return "The audio is too fast. You may want to slow down the pace."
-    elif pace < 80:
-        return "The audio is too slow. You may want to increase the pace."
-    else:
-        return "The pace of the audio is just right."
+fig.write_image("hello.png")
