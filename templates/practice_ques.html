@@ -22,7 +22,22 @@
             <div class="practice practice1" style="align-items: flex-start;">
                 <div class="main-home-inner practice-ques ">
                     <div class="text">
-                        <h2>What are your stengths? </h2>
+                        {% if questionID == "1" %}
+                        <h2>Tell me about yourself</h2>
+                        {% endif %}
+
+                        {% if questionID == "2" %}
+                        <h2>What are your strengths?</h2>
+                        {% endif %}
+
+                        {% if questionID == "3" %}
+                        <h2>Where do you see yourself in the future?</h2>
+                        {% endif %}
+
+                        {% if questionID == "" %}
+                        <h2>Uh-oh!</h2>
+                        {% endif %}
+
                         <h4>Tips to answer this question: </h4>
                         <ul>
                             <li style="margin: 5px 0px;">Make a list of all your strengths</li>

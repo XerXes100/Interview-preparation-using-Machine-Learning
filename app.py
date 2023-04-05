@@ -119,7 +119,7 @@ def recordQuestion(questionID):
 
         return render_template("practice.html")
     else:
-        return render_template("practice_ques.html")
+        return render_template("practice_ques.html", questionID=questionID)
 
 
 @app.route("/review")
