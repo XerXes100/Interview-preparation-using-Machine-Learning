@@ -64,7 +64,7 @@ def extract_strengths(text):
     return tuple([extracted_strengths[:3], strength_examples])
 
 
-text = "I'm a detail-oriented person, and have strong problem-solving skills. For example, I was able to resolve a " \
+text = "I'm a detail oriented person, and have strong problem solving skills. For example, I was able to resolve a " \
        "complex issue by breaking it down into smaller parts and tackling each one systematically. I'm also a great " \
        "communicator and have excellent interpersonal skills. Like, I was able to effectively lead a cross-functional " \
        "team to complete a project on time and within budget. "
