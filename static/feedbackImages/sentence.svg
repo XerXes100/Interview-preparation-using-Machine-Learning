@@ -1,11 +1,26 @@
-<div class="entities" style="line-height: 2.5; direction: ltr">My name 
-<mark class="entity" style="background: #B3C99C; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
-    is Soam Shah
-    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">Leadership</span>
-</mark>
- and 
+<div class="entities" style="line-height: 2.5; direction: ltr">
 <mark class="entity" style="background: #85C1E9; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
-    I am a final year engineering student at Duke University majoring in electrical engineering
-    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">Passion</span>
+    My name is Soam Shah
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">Name</span>
 </mark>
-. I have a strong passion for develop.</div>
+ and I am a 
+<mark class="entity" style="background: #74992e; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+    final year engineering student
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">Position</span>
+</mark>
+ at 
+<mark class="entity" style="background: #FF6000; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+    Duke University
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">Organization</span>
+</mark>
+ majoring in 
+<mark class="entity" style="background: #B3C99C; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+    electrical engineering
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">Degree</span>
+</mark>
+. I have a 
+<mark class="entity" style="background: #159895; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+    strong passion for develop
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">Interest</span>
+</mark>
+.</div>

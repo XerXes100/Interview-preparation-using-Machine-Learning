@@ -40,7 +40,7 @@ app.secret_key = "abc123"
 
 cursor = mydb.cursor()
 transcript = ""
-sentiment_analyis = {}
+sentiment_analysis = {}
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -93,7 +93,7 @@ def practice():
 def recordQuestion(questionID):
     if request.method == "POST" and request.form.get("Record") == "Record":
         global transcript
-        global sentiment_analyis
+        global sentiment_analysis
         r = sr1.Recognizer()
 
         samplerate = 44100  # Hertz
@@ -114,7 +114,7 @@ def recordQuestion(questionID):
             audio_url, "file_title", sentiment_analysis=True
         )
         transcript = t
-        sentiment_analyis = s
+        sentiment_analysis = s
         print(nlp.entity_analysis_q1(t))
         print("confidence analysis:", s)
         return render_template("practice_ques.html", transcript=t)
@@ -128,7 +128,7 @@ def recordQuestion(questionID):
         current_time = now.time()
 
         database.add_response(
-            questionID, transcript, current_date, current_time, sentiment_analyis
+            questionID, transcript, current_date, current_time, sentiment_analysis
         )
 
         return render_template("practice.html")
@@ -152,6 +152,7 @@ def feedback():
 @app.route("/feedbackData/<getResponseFromJson>")
 def feedbackData(getResponseFromJson):
     global sentiment_analysis
+
     g = open("user.json")
     userData = json.load(g)
 
@@ -167,20 +168,7 @@ def feedbackData(getResponseFromJson):
 
     new_response_json_string = responseData[getResponseFromJson]
 
-    print(sentiment_analyis)
-    print(new_response_json_string["response_text"])
-
-    feedback_analysis.sentiment_find(sentiment_analyis)
-
-    if new_response_json_string["questionID"] == 1:
-        feedback_analysis.entity_highlight_q1(new_response_json_string["response_text"])
-    elif new_response_json_string["questionID"] == 2:
-        feedback_analysis.entity_highlight_q2(new_response_json_string["response_text"])
-    else:
-        feedback_analysis.entity_highlight_q3(new_response_json_string["response_text"])
-
-    feedback_analysis.pace(new_response_json_string["response_text"])
-    # print(pace_result, pace)
+    print(new_response_json_string["questionID"])
 
     str1 = ""
     with open("static/feedbackImages/sentence.svg") as file:

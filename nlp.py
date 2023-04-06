@@ -25,6 +25,7 @@ import speech_text
 # nltk.download('omw-1.4')
 
 # Load spaCy language model
+# nlp = spacy.load("en_core_web_sm")
 nlp = spacy.load("en_core_web_sm")
 
 

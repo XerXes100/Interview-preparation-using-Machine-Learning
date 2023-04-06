@@ -27,6 +27,8 @@ def sentiment_find(t):
     bars = ("Positive", "Negative", "Neutral")
     x_pos = np.arange(len(bars))
 
+    plt.switch_backend("Agg")
+
     # Create bars with different colors
     plt.bar(x_pos, height, color=["#FF6000", "#454545", "#FFE6C7"])
 
@@ -60,36 +62,6 @@ def sentiment_find(t):
         )
 
     return pos, neu, neg, str_sent
-
-
-def entity_highlight_q2(text):
-    nlp1 = spacy.load(r"output2/model-best")
-    doc = nlp1(text)
-    list1 = []
-    ents = [(e.text, e.start_char, e.end_char, e.label_) for e in doc.ents]
-    for i in ents:
-        list1.append(i[-1])
-    global entity
-    entity = list1
-
-    colors = {
-        "Passion": "#85C1E9",
-        "Vision": "#74992e",
-        "Growth": "#FF6000",
-        "Leadership": "#B3C99C",
-    }
-    options = {"ents": ["Passion", "Vision", "Growth", "Leadership"], "colors": colors}
-    svg = displacy.render(doc, style="ent", options=options)
-    directory = os.getcwd()
-    output_path = Path(directory + "static/feedbackImages/sentence.svg")
-    output_path.open("w", encoding="utf-8").write(svg)
-    str1 = (
-        "Given above is your response in which we have highlighted entities that are relevant to the question. By "
-        "mentioning these entities, you have provided valuable context and insight, making your response more "
-        "robust "
-        "and insightful. "
-    )
-    return str1
 
 
 def entity_highlight_q1(text):
@@ -126,7 +98,7 @@ def entity_highlight_q1(text):
     # html = displacy.render(doc, style="dep", page=True)
     svg = displacy.render(doc, style="ent", options=options)
     directory = os.getcwd()
-    output_path = Path(directory + "static/feedbackImages/sentence.svg")
+    output_path = Path(directory + "/static/feedbackImages/sentence.svg")
     output_path.open("w", encoding="utf-8").write(svg)
     str1 = (
         "Given above is your response in which we have highlighted entities that are relevant to the question. By "
@@ -136,7 +108,7 @@ def entity_highlight_q1(text):
     return str1
 
 
-def entity_highlight_q3(input_text):
+def entity_highlight_q2(input_text):
     strengths = [
         "Excellent communication skills",
         "Strong problem solving abilities",
@@ -207,30 +179,39 @@ def entity_highlight_q3(input_text):
     # print("ex", ex)
     svg = displacy.render(ex, style="ent", manual=True)
     directory = os.getcwd()
-    output_path = Path(directory + "static/feedbackImages/sentence.svg")
+    output_path = Path(directory + "/static/feedbackImages/sentence.svg")
     output_path.open("w", encoding="utf-8").write(svg)
 
+def entity_highlight_q3(text):
+    nlp1 = spacy.load(r"output2/model-best")
+    doc = nlp1(text)
+    list1 = []
+    ents = [(e.text, e.start_char, e.end_char, e.label_) for e in doc.ents]
+    for i in ents:
+        list1.append(i[-1])
+    global entity
+    entity = list1
 
-def miss_entity_q2(entity):
-    ideal_ent = ["Passion", "Growth", "Vision", "Leadership"]
-    y = set(ideal_ent) ^ set(entity)
-    y = list(y)
-    # print(y)
-    if len(y) == 0:
-        str2 = (
-            "It is evident that you put in the effort to ensure that your answer was informative and comprehensive "
-            "by including the all the necessary entities that are relevant to the question. "
-        )
-    else:
-        str2 = (
-            "However, there are some key entities that were missing, which could further enhance your response and "
-            "provide more context. For instance mentioning {} will  enriched your response by "
-            "providing a more crisp and comprehensive viewpoint. Incorporating these additional entities would have "
-            "strengthened your already well-thought-out answer and taken it to the next level. ".format(
-                y
-            )
-        )
-    return str2
+    colors = {
+        "Passion": "#85C1E9",
+        "Vision": "#74992e",
+        "Growth": "#FF6000",
+        "Leadership": "#B3C99C",
+    }
+    options = {"ents": ["Passion", "Vision", "Growth", "Leadership"], "colors": colors}
+    svg = displacy.render(doc, style="ent", options=options)
+    directory = os.getcwd()
+    output_path = Path(directory + "/static/feedbackImages/sentence.svg")
+    output_path.open("w", encoding="utf-8").write(svg)
+    str1 = (
+        "Given above is your response in which we have highlighted entities that are relevant to the question. By "
+        "mentioning these entities, you have provided valuable context and insight, making your response more "
+        "robust "
+        "and insightful. "
+    )
+    return str1
+
+
 
 
 def miss_entity_q1(entity):
@@ -264,6 +245,26 @@ def miss_entity_q1(entity):
         )
     return str2
 
+def miss_entity_q3(entity):
+    ideal_ent = ["Passion", "Growth", "Vision", "Leadership"]
+    y = set(ideal_ent) ^ set(entity)
+    y = list(y)
+    # print(y)
+    if len(y) == 0:
+        str2 = (
+            "It is evident that you put in the effort to ensure that your answer was informative and comprehensive "
+            "by including the all the necessary entities that are relevant to the question. "
+        )
+    else:
+        str2 = (
+            "However, there are some key entities that were missing, which could further enhance your response and "
+            "provide more context. For instance mentioning {} will  enriched your response by "
+            "providing a more crisp and comprehensive viewpoint. Incorporating these additional entities would have "
+            "strengthened your already well-thought-out answer and taken it to the next level. ".format(
+                y
+            )
+        )
+    return str2
 
 def pause():
     pauses_count = nlp.pauses(filename)
@@ -284,7 +285,7 @@ def pause():
 
 
 def pace(speech):
-    pace_result, pace = nlp.get_audio_pace(filename, speech)
+    pace, pace_result = nlp.get_audio_pace(filename, speech)
 
     fig = go.Figure(
         go.Indicator(
