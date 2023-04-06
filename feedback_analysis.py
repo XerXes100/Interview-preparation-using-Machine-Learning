@@ -103,8 +103,44 @@ def entity_highlight_q1(text):
     return str1
 
 
-def entity_highlight_q3(text):
-    pass
+def entity_highlight_q3(input_text):
+    strengths = ["Excellent communication skills", "Strong problem solving abilities", "Leadership skills",
+                 "Teamwork and collaboration", "Adaptability", "flexibility", "Attention to detail",
+                 "Ability to learn quickly", "Innovation and creativity",
+                 "Strong work ethic", "time management", "Positive attitude and enthusiasm",
+                 "Effective decision-making", "Customer service orientation", "Organizational skills",
+                 "Ability to work under pressure", "Strategic thinking", "Interpersonal skills",
+                 "Conflict resolution", "Negotiation skills", "Critical thinking", "Analytical skills",
+                 "Project management", "Data analysis", "interpretation", "Self-motivation", "Networking",
+                 "Mentoring", "coaching", "Public speaking", "Financial acumen", "Sales and marketing",
+                 "Risk management", "Multitasking", "Initiative", "proactivity", "Cultural sensitivity",
+                 "Empathy", "Resilience", "Problem identification", "Research and development", "Creativity",
+                 "Technical proficiency", "Emotional intelligence", "Collaborative decision-making",
+                 "Active listening"]
+
+    strengths_found = []
+
+    for strength in strengths:
+        if strength.lower() in input_text.lower():
+            start_pos = input_text.lower().find(strength.lower())
+            end_pos = start_pos + len(strength)
+            strengths_found.append((strength, start_pos, end_pos))
+
+    ents1 = []
+    ex = {}
+    # dic_str = {"start":0,"end":0,"label":"Strength"};
+    for strength, start_pos, end_pos in strengths_found:
+        dic_str = {"start": start_pos, "end": end_pos, "label": "Strength"};
+        ents1.append(dic_str)
+    # print("ENTS", ents1)
+
+    ex['text'] = input_text
+    ex['ents'] = ents1
+    # print("ex", ex)
+    svg = displacy.render(ex, style="ent", manual=True)
+    directory = os.getcwd()
+    output_path = Path(directory + "/images/sentence.svg")
+    output_path.open("w", encoding="utf-8").write(svg)
 
 
 def miss_entity_q2(entity):
@@ -145,8 +181,10 @@ def pause():
         str_pause = "In your response, you incorporated pauses during certain parts of your answer. While pauses can " \
                     "be " \
                     "used strategically for emphasis or to gather your thoughts, it's important to be mindful of their " \
-                    "frequency and duration. Pauses can disrupt the flow of your answer and could potentially affect the " \
-                    "listener's understanding. It might be helpful to practice and minimize unnecessary pauses to ensure a " \
+                    "frequency and duration. Pauses can disrupt the flow of your answer and could potentially affect " \
+                    "the " \
+                    "listener's understanding. It might be helpful to practice and minimize unnecessary pauses to " \
+                    "ensure a " \
                     "more fluent and coherent delivery. "
         return str_pause
     else:
@@ -171,7 +209,6 @@ def pace(speech):
     fig.write_image("images/pace.png")
 
     return pace_result
-
 
 # print("Sentimental analysis", sentiment_find(sentiment_analysis))
 # print("Entity highlight", entity_highlight_q1(transcript))
