@@ -66,42 +66,19 @@ def create_table_responses():
         );"
     )
 
-    # cursor.execute(
-    #     "CREATE TABLE IF NOT EXISTS responses ( \
-    #         responseID INT PRIMARY KEY, \
-    #         userID INT, \
-    #         questionID INT, \
-    #         response_text VARCHAR(1000), \
-    #         feedback VARCHAR(1000), \
-    #         date DATE, \
-    #         time TIME, \
-    #         CONSTRAINT fk1 FOREIGN KEY (userID) REFERENCES users(userID) ON UPDATE CASCADE ON DELETE CASCADE, \
-    #         CONSTRAINT fk2 FOREIGN KEY (questionID) REFERENCES questions(questionID) ON UPDATE CASCADE ON DELETE CASCADE \
-    #     );"
-    # )
 
-
-def create_table_output():
+def create_table_outputs():
     cursor.execute(
-        "CREATE TABLE IF NOT EXISTS output ( \
+        "CREATE TABLE IF NOT EXISTS outputs ( \
             outputID INT PRIMARY KEY, \
             responseID INT, \
-            positive_sentiment FLOAT, \
-            negative_sentiment FLOAT, \
-            neutral_sentiment FLOAT, \
-            frequency FLOAT, \
-            pitch FLOAT, \
-            intensity FLOAT, \
+            questionID INT, \
+            positive_sentiment INT, \
+            negative_sentiment INT, \
+            neutral_sentiment INT, \
             CONSTRAINT fk FOREIGN KEY (responseID) REFERENCES responses(responseID) ON UPDATE CASCADE ON DELETE CASCADE \
         )"
     )
-
-    # cursor.execute(
-    #     "CREATE TABLE IF NOT EXISTS customer(email_id VARCHAR(20) primary key,name VARCHAR(20),password VARCHAR(20), phone INT(10), age INT)")
-    # cursor.execute(
-    #     "CREATE TABLE IF NOT EXISTS record(tickets_booked INT,seat_type VARCHAR(20),email_id VARCHAR(20),movie_id INT,show_date DATE, CONSTRAINT fk2 FOREIGN KEY(email_id)REFERENCES customer(email_id)ON UPDATE CASCADE ON DELETE CASCADE,CONSTRAINT fk3 FOREIGN KEY(movie_id)REFERENCES movie_details(movie_id)ON UPDATE CASCADE ON DELETE CASCADE,CONSTRAINT fk4 FOREIGN KEY(show_date)REFERENCES booking(show_date)ON UPDATE CASCADE ON DELETE CASCADE)")
-    # cursor.execute(
-    #     "CREATE TABLE IF NOT EXISTS upcoming_movie(movie_name VARCHAR(20), genre VARCHAR(20), movie_ID INT primary key, movie_release_date DATE)")
 
 
 def entries():
@@ -145,14 +122,14 @@ def add_questions():
     mydb.commit()
 
 
-def fetch_entries():
+def fetch_users():
     cursor.execute("select * from users")
     userRecords = cursor.fetchall()
     for i in range(len(userRecords)):
         print(userRecords[i])
 
 
-def user_entry(username, email, password):
+def insert_user(username, email, password):
     cursor = mydb.cursor(buffered=True)
     cursor.execute("select * from users where email = %s", [email])
 
@@ -181,7 +158,7 @@ def user_entry(username, email, password):
         return "Value exists"
 
 
-def fetch_entry(email, password):
+def fetch_current_user(email, password):
     fetch_user = f"SELECT * FROM users WHERE email = %s and password = %s;"
     fetch_values = [email, password]
     cursor.execute(fetch_user, fetch_values)
@@ -214,7 +191,7 @@ def fetch_entry(email, password):
         }
 
 
-def add_response(questionID, response, current_date, current_time):
+def add_response(questionID, response, current_date, current_time, sentiment_analysis):
     f = open("user.json")
     data = json.load(f)
     f.close()
@@ -261,8 +238,48 @@ def add_response(questionID, response, current_date, current_time):
     cursor.execute(sql_insert_response, response_values)
 
     mydb.commit()
+
+    insert_output(response_id, questionID, sentiment_analysis)
     fetch_current_user_responses()
     print("Response added successfully")
+
+
+def insert_output(responseID, questionID, sentiment_analysis):
+    pos, neu, neg = 0, 0, 0
+    for i in sentiment_analysis:
+        if i["sentiment"] == "POSITIVE":
+            pos += 1
+        elif i["sentiment"] == "NEUTRAL":
+            neu += 1
+        else:
+            neg += 1
+
+    print(pos, neu, neg)
+
+    cursor.execute("select * from outputs order by outputID DESC LIMIT 1")
+    last_output = cursor.fetchall()
+
+    output_id = 1
+
+    for row in last_output:
+        last_output_id = row[0]
+        output_id = int(str(last_output_id)) + 1
+
+    sql_insert_output = f"INSERT INTO outputs(\
+        outputID, \
+        responseID, \
+        questionID, \
+        positive_sentiment, \
+        negative_sentiment, \
+        neutral_sentiment, \
+        ) VALUES (%s, %s, %s, %s, %s, %s);"
+
+    output_values = [output_id, int(responseID), int(questionID), pos, neg, neu]
+
+    cursor.execute(sql_insert_output, output_values)
+
+    mydb.commit()
+    print("Output added successfully")
 
 
 def fetch_responses():
@@ -317,5 +334,5 @@ def fetch_current_user_responses():
 # add_questions()
 # fetch_responses()
 # create_table_responses()
-
+# create_table_outputs()
 # fetch_current_user_responses()

@@ -50,7 +50,7 @@ def index():
         email = request.form.get("email")
         password = request.form.get("password")
 
-        user_data = database.fetch_entry(email=email, password=password)
+        user_data = database.fetch_current_user(email=email, password=password)
         print(user_data)
         json_object = json.dumps(user_data, indent=5)
         with open("user.json", "w") as outfile:
@@ -67,7 +67,7 @@ def signup():
         email = request.form.get("email")
         password = request.form.get("password")
 
-        value_check = database.user_entry(
+        value_check = database.insert_user(
             username=username, email=email, password=password
         )
 
@@ -81,8 +81,6 @@ def signup():
 
 @app.route("/home")
 def home():
-    # cursor.execute("Select * from users where emailID = %s", ("emailID"))
-    # userDetails = cursor.fetchall()
     return render_template("home.html")
 
 
@@ -124,14 +122,14 @@ def recordQuestion(questionID):
         request.method == "POST"
         and request.form.get("Submit_Answer") == "Submit_Answer"
     ):
-        import speech_text, feedback_analysis
-
         now = datetime.now()
 
         current_date = now.date()
         current_time = now.time()
 
-        database.add_response(questionID, transcript, current_date, current_time)
+        database.add_response(
+            questionID, transcript, current_date, current_time, sentiment_analyis
+        )
 
         return render_template("practice.html")
     else:
@@ -153,6 +151,7 @@ def feedback():
 
 @app.route("/feedbackData/<getResponseFromJson>")
 def feedbackData(getResponseFromJson):
+    global sentiment_analysis
     g = open("user.json")
     userData = json.load(g)
 
