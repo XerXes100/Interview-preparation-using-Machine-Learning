@@ -1,21 +1,11 @@
-<div class="entities" style="line-height: 2.5; direction: ltr">My name is 
-<mark class="entity" style="background: #85C1E9; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
-    Jane Smith
-    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">Name</span>
+<div class="entities" style="line-height: 2.5; direction: ltr">I am a creative problem solver with 
+<mark class="entity" style="background: #ddd; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+    excellent communication skills
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">Strength</span>
 </mark>
-, and I am a 
-<mark class="entity" style="background: #74992e; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
-    final year engineering student
-    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">Position</span>
+ and a 
+<mark class="entity" style="background: #ddd; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+    strong work ethic
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">Strength</span>
 </mark>
- at 
-<mark class="entity" style="background: #FF6000; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
-    Duke University
-    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">Organization</span>
-</mark>
-. Majoring in electrical engineering. I have a 
-<mark class="entity" style="background: #159895; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
-    strong passion for developing innovative solutions to real world problems.
-    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">Interest</span>
-</mark>
- Through my studies in engineering, I have completed various projects and internships in the field of power systems, renewable energy and control systems.</div>
+.</div>
