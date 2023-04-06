@@ -55,20 +55,3 @@
 # # directory = os.getcwd()
 # # output_path = Path(directory + "/images/sentence.svg")
 # # output_path.open("w", encoding="utf-8").write(svg)
-import matplotlib.pyplot as plt
-import plotly.graph_objects as go
-fig = go.Figure(go.Indicator(
-        domain={'x': [0, 1], 'y': [0, 1]},
-        value=168,
-        mode="gauge+number+delta",
-        title={'text': "WPM"},
-        delta={'reference': 130},
-        gauge={'axis': {'range': [None, 250]},
-                'bar': {'color': "#F5F1F0"},
-               'steps': [
-                   {'range': [0, 130], 'color': "#B27575"},
-                   {'range': [130, 190], 'color': "#9A5454"},
-                    {'range': [190, 250], 'color': "#7E3F3F"}],
-               'threshold': {'line': {'color': "#DF0B0B", 'width': 4}, 'thickness': 0.75, 'value': 190}}))
-
-fig.write_image("images/pace.png")
