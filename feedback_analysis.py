@@ -58,6 +58,9 @@ def entity_highlight_q1(text):
     output_path = Path(directory + "/images/sentence.svg")
     output_path.open("w", encoding="utf-8").write(svg)
 
+def entity_highlight_q3(text):
+    pass
+
 
 def miss_entity_q2(entity):
     ideal_ent = ["Passion", "Growth", "Vision", "Leadership"]
@@ -72,6 +75,10 @@ def miss_entity_q1(entity):
 
 
 pauses_count = nlp.pauses(filename)
+if len(pauses_count) > 2:
+    pass
+else:
+    pass
 
 
 def pace(speech):
@@ -93,6 +100,5 @@ def pace(speech):
 
     return pace_result
 
-
 # stutter_find = nlp.detect_stutter(filename)
-entity_highlight_q2(s)
+# entity_highlight_q1(s)

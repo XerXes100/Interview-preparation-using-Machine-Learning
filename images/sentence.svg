@@ -1,11 +1,21 @@
-<div class="entities" style="line-height: 2.5; direction: ltr">My name 
-<mark class="entity" style="background: #B3C99C; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
-    is Jane Smith
-    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">Leadership</span>
+<div class="entities" style="line-height: 2.5; direction: ltr">My name is 
+<mark class="entity" style="background: #85C1E9; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+    Jane Smith
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">Name</span>
 </mark>
-, and 
+, and I am a 
 <mark class="entity" style="background: #74992e; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
-    I am a final year engineering student at Duke University. Majoring in electrical engineering
-    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">Vision</span>
+    final year engineering student
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">Position</span>
 </mark>
-. I have a strong passion for developing innovative solutions to real world problems. Through my studies in engineering, I have completed various projects and internships in the field of power systems, renewable energy and control systems.</div>
+ at 
+<mark class="entity" style="background: #FF6000; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+    Duke University
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">Organization</span>
+</mark>
+. Majoring in electrical engineering. I have a 
+<mark class="entity" style="background: #159895; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+    strong passion for developing innovative solutions to real world problems.
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">Interest</span>
+</mark>
+ Through my studies in engineering, I have completed various projects and internships in the field of power systems, renewable energy and control systems.</div>

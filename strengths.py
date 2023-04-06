@@ -85,9 +85,9 @@
 input_text = "I am a creative problem solver with excellent communication skills and a strong work ethic."
 
 strengths = ["Excellent communication skills", "Strong problem-solving abilities", "Leadership skills",
-             "Teamwork and collaboration", "Adaptability and flexibility", "Attention to detail",
+             "Teamwork and collaboration", "Adaptability","flexibility", "Attention to detail",
              "Ability to learn quickly", "Innovation and creativity",
-             "Strong work ethic and time management", "Positive attitude and enthusiasm",
+             "Strong work ethic","time management", "Positive attitude and enthusiasm",
              "Effective decision-making", "Customer service orientation", "Organizational skills",
              "Ability to work under pressure", "Strategic thinking", "Interpersonal skills",
              "Conflict resolution", "Negotiation skills", "Critical thinking", "Analytical skills",

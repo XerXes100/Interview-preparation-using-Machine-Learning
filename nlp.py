@@ -54,9 +54,9 @@ def entity_analysis_q2(transcript):
     print(ents)
 
 
-def pauses(audio_file):
+def pauses(audio_file1):
     # ge
-    audio_file = AudioSegment.from_wav("output.wav")
+    audio_file = AudioSegment.from_wav(audio_file1)
 
     # Set the minimum length of a pause in milliseconds
     pause_threshold = 500
