@@ -10,7 +10,7 @@ import plotly.graph_objects as go
 
 filename = 'output.wav'
 audio_url = speech_text.upload(filename)
-s, t = speech_text.save_transcript(audio_url, 'file_title', sentiment_analysis=True)
+transcript, sentiment_analysis = speech_text.save_transcript(audio_url, 'file_title', sentiment_analysis=True)
 entity = []
 
 
@@ -34,13 +34,13 @@ def sentiment_find(t):
     plt.xticks(x_pos, bars)
     plt.savefig('sentiment.png')
 
-    if pos > neu and neg != 0:
+    if pos > neu and neg >= 0:
         str_sent = "Your response carries a positive sentiment that is evident in your choice of words, tone, " \
                    "and overall demeanor. Your enthusiastic and optimistic approach creates a favorable impression and " \
                    "helps to convey your message effectively. The positive sentiment in your answer is engaging and " \
                    "uplifting, making it enjoyable for the listener to receive your insights. Well done in maintaining " \
                    "a positive tone in your response, as it enhances the overall impact of your communication! "
-    elif neu > pos and neg != 0:
+    elif neu > pos and neg >= 0:
         str_sent = "Your response conveys a neutral sentiment, providing information without expressing any specific " \
                    "emotional tone. While a neutral sentiment can be appropriate in certain situations, be mindful to " \
                    "infuse appropriate emotions and tone when needed to better connect with your audience and make " \
@@ -74,7 +74,7 @@ def entity_highlight_q2(text):
     output_path.open("w", encoding="utf-8").write(svg)
     str1 = "Given above is your response in which we have highlighted entities that are relevant to the question. By " \
            "mentioning these entities, you have provided valuable context and insight, making your response more " \
-           "robust " \ 
+           "robust " \
            "and insightful. "
     return str1
 
@@ -139,15 +139,18 @@ def miss_entity_q1(entity):
     return str2
 
 
-pauses_count = nlp.pauses(filename)
-if pauses_count > 2:
-    str_pause = "In your response, you incorporated pauses during certain parts of your answer. While pauses can be " \
-                "used strategically for emphasis or to gather your thoughts, it's important to be mindful of their " \
-                "frequency and duration. Pauses can disrupt the flow of your answer and could potentially affect the " \
-                "listener's understanding. It might be helpful to practice and minimize unnecessary pauses to ensure a " \
-                "more fluent and coherent delivery. "
-else:
-    pass
+def pause():
+    pauses_count = nlp.pauses(filename)
+    if pauses_count > 2:
+        str_pause = "In your response, you incorporated pauses during certain parts of your answer. While pauses can " \
+                    "be " \
+                    "used strategically for emphasis or to gather your thoughts, it's important to be mindful of their " \
+                    "frequency and duration. Pauses can disrupt the flow of your answer and could potentially affect the " \
+                    "listener's understanding. It might be helpful to practice and minimize unnecessary pauses to ensure a " \
+                    "more fluent and coherent delivery. "
+        return str_pause
+    else:
+        pass
 
 
 def pace(speech):
@@ -170,6 +173,8 @@ def pace(speech):
     return pace_result
 
 
-# stutter_find = nlp.detect_stutter(filename)
-entity_highlight_q1(s)
-print(miss_entity_q1(entity))
+print("Sentimental analysis", sentiment_find(sentiment_analysis))
+print("Entity highlight", entity_highlight_q1(transcript))
+print("Missing Entity", miss_entity_q1(entity))
+print("Pauses", pause())
+print("Pace", pace(transcript))

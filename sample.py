@@ -1,4 +1,6 @@
-list1=[1,2,3]
-list2=[2]
-y = set(list1) ^ set(list2)
-print(list(y))
+str1=""
+with open("images/sentence.svg") as file:
+    for item in file:
+        str1+=item
+        # print(item)
+print(str1)
