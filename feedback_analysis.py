@@ -24,11 +24,11 @@ def sentiment_find(t):
         else:
             neg += 1
     height = [pos, neu, neg]
-    bars = ('Positive', "Negative", "Neutral")
+    bars = ('Positive', "Neutral", "Negative")
     x_pos = np.arange(len(bars))
 
     # Create bars with different colors
-    plt.bar(x_pos, height, color=['#FF6000', '#454545', '#FFE6C7'])
+    plt.bar(x_pos, height, color=['#4A915A', '#A1A1A1', '#DF0B0B'])
 
     # Create names on the x-axis
     plt.xticks(x_pos, bars)
@@ -201,10 +201,12 @@ def pace(speech):
         title={'text': "WPM"},
         delta={'reference': 130},
         gauge={'axis': {'range': [None, 250]},
+               'bar': {'color': "#F5F1F0"},
                'steps': [
-                   {'range': [0, 125], 'color': "lightgray"},
-                   {'range': [100, 250], 'color': "gray"}],
-               'threshold': {'line': {'color': "red", 'width': 4}, 'thickness': 0.75, 'value': 190}}))
+                   {'range': [0, 130], 'color': "#B27575"},
+                   {'range': [130, 190], 'color': "#9A5454"},
+                   {'range': [190, 250], 'color': "#7E3F3F"}],
+               'threshold': {'line': {'color': "#DF0B0B", 'width': 4}, 'thickness': 0.75, 'value': 190}}))
 
     fig.write_image("images/pace.png")
 
