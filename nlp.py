@@ -154,9 +154,11 @@ def get_audio_pace(audio_file_path, s):
     num_words = len(s.split())  # get the number of words spoken in the audio file
     pace = num_words / (duration / 60)  # calculate the pace in WPM
     print(pace)
+    pace_result = ""
     if pace > 200:
-        return "The audio is too fast. You may want to slow down the pace."
+        pace_result = "The audio is too fast. You may want to slow down the pace."
     elif pace < 120:
-        return "The audio is too slow. You may want to increase the pace."
+        pace_result = "The audio is too slow. You may want to increase the pace."
     else:
-        return "The pace of the audio is just right."
+        pace_result = "The pace of the audio is just right."
+    return pace, pace_result

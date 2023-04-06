@@ -11,6 +11,7 @@ import speech_recognition as sr1
 import nlp
 import json
 from datetime import datetime
+import speech_text, feedback_analysis
 
 app = Flask(__name__)
 
@@ -29,6 +30,7 @@ app.secret_key = "abc123"
 
 cursor = mydb.cursor()
 transcript = ""
+sentiment_analyis = {}
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -82,7 +84,7 @@ def practice():
 @app.route("/record/<int:questionID>", methods=["GET", "POST"])
 def recordQuestion(questionID):
     if request.method == "POST" and request.form.get("Record") == "Record":
-        global transcript
+        global transcript, sentiment_analyis
         r = sr1.Recognizer()
 
         samplerate = 44100  # Hertz
@@ -99,22 +101,26 @@ def recordQuestion(questionID):
         import speech_text
 
         audio_url = speech_text.upload(filename)
-        s, t = speech_text.save_transcript(
+        t, s = speech_text.save_transcript(
             audio_url, "file_title", sentiment_analysis=True
         )
         print(s)
-        transcript = s
-        print(nlp.entity_analysis_q1(s))
-        print("confidence analysis:", t)
-        return render_template("practice_ques.html", transcript=s)
+        transcript = t
+        sentiment_analyis = s
+        print(nlp.entity_analysis_q1(t))
+        print("confidence analysis:", s)
+        return render_template("practice_ques.html", transcript=t)
     elif (
         request.method == "POST"
         and request.form.get("Submit_Answer") == "Submit_Answer"
     ):
+        import speech_text, feedback_analysis
+
         now = datetime.now()
 
         current_date = now.date()
         current_time = now.time()
+
         database.add_response(questionID, transcript, current_date, current_time)
 
         return render_template("practice.html")
@@ -151,6 +157,18 @@ def feedbackData(getResponseFromJson):
     print(responseData[getResponseFromJson])
 
     new_response_json_string = responseData[getResponseFromJson]
+
+    feedback_analysis.sentiment_find(sentiment_analyis)
+
+    if new_response_json_string["questionID"] == 1:
+        feedback_analysis.entity_highlight_q1(transcript)
+    elif new_response_json_string["questionID"] == 2:
+        feedback_analysis.entity_highlight_q2(transcript)
+    else:
+        feedback_analysis.entity_highlight_q3(transcript)
+
+    feedback_analysis.pace(transcript)
+    # print(pace_result, pace)
 
     userResponseFeedback = {
         "username": userData["username"],

@@ -9,8 +9,8 @@ import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 
 filename = "output.wav"
-audio_url = speech_text.upload(filename)
-s, t = speech_text.save_transcript(audio_url, "file_title", sentiment_analysis=True)
+# audio_url = speech_text.upload(filename)
+# s, t = speech_text.save_transcript(audio_url, "file_title", sentiment_analysis=True)
 
 
 def sentiment_find(t):
@@ -26,29 +26,15 @@ def sentiment_find(t):
     bars = ("Positive", "Negative", "Neutral")
     x_pos = np.arange(len(bars))
 
+    plt.switch_backend("Agg")
+
     # Create bars with different colors
     plt.bar(x_pos, height, color=["#FF6000", "#454545", "#FFE6C7"])
 
     # Create names on the x-axis
     plt.xticks(x_pos, bars)
-    plt.savefig("sentiment.png")
+    plt.savefig("static/feedbackImages/sentiment.png")
     return pos, neu, neg
-
-
-def entity_highlight_q2(text):
-    nlp1 = spacy.load(r"output2/model-best")
-    doc = nlp1(text)
-    colors = {
-        "Passion": "#85C1E9",
-        "Vision": "#74992e",
-        "Growth": "#FF6000",
-        "Leadership": "#B3C99C",
-    }
-    options = {"ents": ["Passion", "Vision", "Growth", "Leadership"], "colors": colors}
-    svg = displacy.render(doc, style="ent", options=options)
-    directory = os.getcwd()
-    output_path = Path(directory + "/images/sentence.svg")
-    output_path.open("w", encoding="utf-8").write(svg)
 
 
 def entity_highlight_q1(text):
@@ -78,14 +64,28 @@ def entity_highlight_q1(text):
     # html = displacy.render(doc, style="dep", page=True)
     svg = displacy.render(doc, style="ent", options=options)
     directory = os.getcwd()
-    output_path = Path(directory + "/images/sentence.svg")
+    output_path = Path(directory + "/static/feedbackImages/sentence.svg")
     output_path.open("w", encoding="utf-8").write(svg)
 
 
-def miss_entity_q2(entity):
-    ideal_ent = ["Passion", "Growth", "Vision", "Leadership"]
-    y = set(ideal_ent) ^ set(entity)
-    print(y)
+def entity_highlight_q2(text):
+    nlp1 = spacy.load(r"output2/model-best")
+    doc = nlp1(text)
+    colors = {
+        "Passion": "#85C1E9",
+        "Vision": "#74992e",
+        "Growth": "#FF6000",
+        "Leadership": "#B3C99C",
+    }
+    options = {"ents": ["Passion", "Vision", "Growth", "Leadership"], "colors": colors}
+    svg = displacy.render(doc, style="ent", options=options)
+    directory = os.getcwd()
+    output_path = Path(directory + "/static/feedbackImages/sentence.svg")
+    output_path.open("w", encoding="utf-8").write(svg)
+
+
+def entity_highlight_q3(text):
+    return
 
 
 def miss_entity_q1(entity):
@@ -101,14 +101,20 @@ def miss_entity_q1(entity):
         "Hobbies",
     ]
     y = set(ideal_ent) ^ set(entity)
-    print(y)
+    return y
 
 
-pauses_count = nlp.pauses(filename)
+def miss_entity_q2(entity):
+    ideal_ent = ["Passion", "Growth", "Vision", "Leadership"]
+    y = set(ideal_ent) ^ set(entity)
+    return y
 
 
-def pace(speech):
-    pace_result, pace = nlp.get_audio_pace(filename, speech)
+# pauses_count = nlp.pauses(filename)
+
+
+def pace(speech_transcript):
+    pace, pace_result = nlp.get_audio_pace(filename, speech_transcript)
 
     fig = go.Figure(
         go.Indicator(
@@ -132,10 +138,11 @@ def pace(speech):
         )
     )
 
-    fig.write_image("images/pace.png")
+    fig.write_image("static/feedbackImages/pace.png")
 
-    return pace_result
+    # return pace_result, pace
 
 
 # stutter_find = nlp.detect_stutter(filename)
-entity_highlight_q2(s)
+# entity_highlight_q2(s)
+# sentiment_find(t)
