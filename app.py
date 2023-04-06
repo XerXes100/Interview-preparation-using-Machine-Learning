@@ -1,5 +1,14 @@
 import os
-from flask import Flask, render_template, request, url_for, redirect, session, flash
+from flask import (
+    Flask,
+    render_template,
+    request,
+    url_for,
+    redirect,
+    session,
+    flash,
+    send_file,
+)
 import re
 import mysql.connector
 from flask import request
@@ -12,6 +21,7 @@ import nlp
 import json
 from datetime import datetime
 import speech_text, feedback_analysis
+from markupsafe import Markup
 
 app = Flask(__name__)
 
@@ -84,7 +94,8 @@ def practice():
 @app.route("/record/<int:questionID>", methods=["GET", "POST"])
 def recordQuestion(questionID):
     if request.method == "POST" and request.form.get("Record") == "Record":
-        global transcript, sentiment_analyis
+        global transcript
+        global sentiment_analyis
         r = sr1.Recognizer()
 
         samplerate = 44100  # Hertz
@@ -104,7 +115,6 @@ def recordQuestion(questionID):
         t, s = speech_text.save_transcript(
             audio_url, "file_title", sentiment_analysis=True
         )
-        print(s)
         transcript = t
         sentiment_analyis = s
         print(nlp.entity_analysis_q1(t))
@@ -152,23 +162,32 @@ def feedbackData(getResponseFromJson):
     k = open("responses.json")
     responseData = json.load(k)
 
-    print(questionData)
-    print(getResponseFromJson)
-    print(responseData[getResponseFromJson])
+    # print(questionData)
+    # print(getResponseFromJson)
+    # print(responseData[getResponseFromJson])
 
     new_response_json_string = responseData[getResponseFromJson]
+
+    print(sentiment_analyis)
+    print(new_response_json_string["response_text"])
 
     feedback_analysis.sentiment_find(sentiment_analyis)
 
     if new_response_json_string["questionID"] == 1:
-        feedback_analysis.entity_highlight_q1(transcript)
+        feedback_analysis.entity_highlight_q1(new_response_json_string["response_text"])
     elif new_response_json_string["questionID"] == 2:
-        feedback_analysis.entity_highlight_q2(transcript)
+        feedback_analysis.entity_highlight_q2(new_response_json_string["response_text"])
     else:
-        feedback_analysis.entity_highlight_q3(transcript)
+        feedback_analysis.entity_highlight_q3(new_response_json_string["response_text"])
 
-    feedback_analysis.pace(transcript)
+    feedback_analysis.pace(new_response_json_string["response_text"])
     # print(pace_result, pace)
+
+    str1 = ""
+    with open("static/feedbackImages/sentence.svg") as file:
+        for item in file:
+            str1 += item
+            # print(item)
 
     userResponseFeedback = {
         "username": userData["username"],
@@ -177,9 +196,16 @@ def feedbackData(getResponseFromJson):
         "feedback": new_response_json_string["feedback"],
         "date": new_response_json_string["date"],
         "time": new_response_json_string["time"],
+        "svg_element": str1,
     }
 
     return render_template("feedback.html", responseData=userResponseFeedback)
+
+
+# @app.route("/sentence_analysis_image")
+# def sentence_analysis_image():
+#     filename = "static/feedbackImages/sentence.svg"
+#     return send_file(filename, mimetype="image/svg+xml")
 
 
 @app.route("/logout")

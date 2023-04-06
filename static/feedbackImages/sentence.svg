@@ -1,1 +1,11 @@
-<div class="entities" style="line-height: 2.5; direction: ltr"></div>
+<div class="entities" style="line-height: 2.5; direction: ltr">My name 
+<mark class="entity" style="background: #B3C99C; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+    is Soam Shah
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">Leadership</span>
+</mark>
+ and 
+<mark class="entity" style="background: #85C1E9; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+    I am a final year engineering student at Duke University majoring in electrical engineering
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">Passion</span>
+</mark>
+. I have a strong passion for develop.</div>

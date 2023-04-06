@@ -281,7 +281,11 @@ def fetch_current_user_responses():
 
     new_json = {}
     print(data["userID"])
-    sql_fetch_query = "select * from responses where userID = " + str(data["userID"])
+    sql_fetch_query = (
+        "select * from responses where userID = "
+        + str(data["userID"])
+        + " order by date desc, time desc;"
+    )
     cursor.execute(sql_fetch_query)
     userRecords = cursor.fetchall()
     new_json[0] = len(userRecords)

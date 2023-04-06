@@ -7,10 +7,13 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
+from cairosvg import svg2png
 
 filename = "output.wav"
 # audio_url = speech_text.upload(filename)
-# s, t = speech_text.save_transcript(audio_url, "file_title", sentiment_analysis=True)
+# speech_transcript, sentiment = speech_text.save_transcript(
+#     audio_url, "file_title", sentiment_analysis=True
+# )
 
 
 def sentiment_find(t):
@@ -144,5 +147,5 @@ def pace(speech_transcript):
 
 
 # stutter_find = nlp.detect_stutter(filename)
-# entity_highlight_q2(s)
+# entity_highlight_q1(speech_transcript)
 # sentiment_find(t)
