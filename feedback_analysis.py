@@ -24,7 +24,7 @@ def sentiment_find(t):
         else:
             neg += 1
     height = [pos, neu, neg]
-    bars = ("Positive", "Negative", "Neutral")
+    bars = ("Positive", "Neutral", "Negative")
     x_pos = np.arange(len(bars))
 
     plt.switch_backend("Agg")
