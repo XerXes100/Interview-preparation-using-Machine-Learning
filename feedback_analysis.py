@@ -12,6 +12,7 @@ filename = "output.wav"
 # audio_url = speech_text.upload(filename)
 # transcript, sentiment_analysis = speech_text.save_transcript(audio_url, 'file_title', sentiment_analysis=True)
 entity = []
+strength_count=0
 
 
 def sentiment_find(t):
@@ -165,7 +166,8 @@ def entity_highlight_q2(input_text):
             start_pos = input_text.lower().find(strength.lower())
             end_pos = start_pos + len(strength)
             strengths_found.append((strength, start_pos, end_pos))
-
+    global strength_count
+    strength_count=len(strengths_found)
     ents1 = []
     ex = {}
     # dic_str = {"start":0,"end":0,"label":"Strength"};
@@ -264,6 +266,13 @@ def miss_entity_q3(entity):
                 y
             )
         )
+    return str2
+
+def miss_entity_q2(strength_count):
+    if(strength_count>3):
+        str2=""
+    else:
+        str2=""
     return str2
 
 def pause():

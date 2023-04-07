@@ -53,28 +53,44 @@
                 </div>
             </div>
 
-            <div class="feedback-response">
+<!--            <div class="feedback-response">-->
 
-                <div class="feedback-response-inner">
-                    <h3>Sentiment Analysis</h3>
-                    <img src="{{ url_for('static', filename='feedbackImages/sentiment.png' ) }}"
-                        alt="sentiment_analysis">
-                </div>
-                <div class="feedback-response-inner">
-                    <h3>Pace Analysis</h3>
-                    <img src="{{ url_for('static', filename='feedbackImages/pace.png' ) }}" alt="pace_analysis">
-                </div>
-            </div>
-            <div class="feedback-response-inner">
                 <div class="feedback-response-inner">
                     <h3>Sentence Analysis</h3>
                     {{ responseData["svg_element"]|safe}}
-
                 </div>
-            </div>
+
+                <div class="feedback-response-inner">
+                    {{svg_text}}
+                </div>
+                <div class="feedback-response-inner">
+                   <h3>Sentiment Analysis</h3>
+                   <img src="{{ url_for('static', filename='feedbackImages/sentiment.png' ) }}"
+                           alt="sentiment_analysis">
+                </div>
+
+
+<!--                <div class="feedback-response-inner">-->
+<!--                    <h3>Sentiment Analysis</h3>-->
+<!--                    <img src="{{ url_for('static', filename='feedbackImages/sentiment.png' ) }}"-->
+<!--                        alt="sentiment_analysis">-->
+<!--                </div>-->
+<!--                <div class="feedback-response-inner">-->
+<!--                    <h3>Pace Analysis</h3>-->
+<!--                    <img src="{{ url_for('static', filename='feedbackImages/pace.png' ) }}" alt="pace_analysis">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="feedback-response-inner">-->
+<!--                <div class="feedback-response-inner">-->
+<!--                    <h3>Sentence Analysis</h3>-->
+<!--                    {{ responseData["svg_element"]|safe}}-->
+
+<!--                </div>-->
+<!--            </div>-->
             <br>
             <br>
             <br>
+<!--        </div>-->
         </div>
     </body>
 
