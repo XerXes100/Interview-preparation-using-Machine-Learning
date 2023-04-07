@@ -19,45 +19,46 @@
 
         <div class="main-home" id="review">
 
-            <a href="{{ url_for('feedback') }}" class="review-item">
+            {% for i in range(responses["0"]) %}
+
+            <a href="{{ url_for('feedbackData', getResponseFromJson = i+1) }}" class="review-item">
+                <div class="review-item-date">
+                    <p>{{responses[(i+1)|string]["time"]}}</p>
+                    <p>{{responses[(i+1)|string]["date"]}}</p>
+                </div>
+                <div class="review-item-title">
+                    <!-- <h2>Introduce yourself<span class="greater"> &gt; </span></h2> -->
+
+                    {% if responses[(i+1)|string]["questionID"] == 1 %}
+                    <h2>Tell me about yourself</h2>
+                    {% endif %}
+
+                    {% if responses[(i+1)|string]["questionID"] == 2 %}
+                    <h2>What are your strengths?</h2>
+                    {% endif %}
+
+                    {% if responses[(i+1)|string]["questionID"] == 3 %}
+                    <h2>Where do you see yourself in the future?</h2>
+                    {% endif %}
+
+                    {% if responses[(i+1)|string]["questionID"] == "" %}
+                    <h2>Uh-oh!</h2>
+                    {% endif %}
+                </div>
+            </a>
+            <br>
+            {% endfor %}
+
+
+            <!-- <a href="{{ url_for('feedback') }}" class="review-item">
                 <div class="review-item-date">
                     <p> 09:00 am </p>
                     <p>30th December, 2022 </p>
                 </div>
                 <div class="review-item-title">
-                    <!-- <h2>Introduce yourself<span class="greater"> &gt; </span></h2> -->
                     <h2>Introduce yourself</h2>
                 </div>
-            </a>
-            <a href="" class="review-item">
-                <div class="review-item-date">
-                    <p> 09:14 am </p>
-                    <p>30th December, 2022 </p>
-                </div>
-                <div class="review-item-title">
-                    <!-- <h2>What are your strengths?<span class="greater"> &gt; </span></h2> -->
-                    <h2>What are your strengths?</h2>
-                </div>
-            </a>
-            <a href="" class="review-item">
-                <div class="review-item-date">
-                    <p> 10:29 am </p>
-                    <p>30th December, 2022 </p>
-                </div>
-                <div class="review-item-title">
-                    <!-- <h2>Where do you see yourself in the future? <span class="greater"> &gt; </span></h2> -->
-                    <h2>Where do you see yourself in the future?</h2>
-                </div>
-            </a>
-            <!-- <a href="" class="review-item">
-            <div class="review-item-date">
-                <p> 09:00 am </p>
-                <p>30th December, 2022 </p>
-            </div>
-            <div class="review-item-title">
-                <h2>Where do you see yourself in the future? <span class="greater"> &gt; </span></h2>
-            </div>
-        </a> -->
+            </a> -->
 
         </div>
     </body>
