@@ -152,18 +152,16 @@ def get_audio_pace(audio_file_path, s):
     pace = num_words / (duration / 60)  # calculate the pace in WPM
     # print(pace)
     if pace > 190:
-        return "While your response contains valuable content, the pace of your delivery seems to be too fast. It's " \
-               "important to ensure that your speech is clear and easy to follow for the listener. Try to slow down a " \
-               "bit and allow the information to sink in, while still maintaining a confident and articulate tone. " \
-               "Remember, pacing is crucial in effective communication, so be mindful of your speed to ensure your " \
-               "message is effectively conveyed", pace
+        pace_result = "While your response contains valuable content, the pace of your delivery seems to be too fast. It's " \
+                      "important to ensure that your speech is clear and easy to follow for the listener. Try to slow down a " \
+                      "bit and allow the information to sink in, while still maintaining a confident and articulate tone. " \
+                      "Remember, pacing is crucial in effective communication, so be mindful of your speed to ensure your " \
+                      "message is effectively conveyed"
     elif pace < 130:
-        return "While your response contains valuable information, the pace of your delivery seems to be too slow. It " \
-               "may be beneficial to pick up the pace a bit in order to maintain the listener's engagement. Remember " \
-               "to strike a balance between providing thorough information and maintaining an appropriate speed to " \
-               "keep your audience attentive and interested",pace
+        pace_result = "While your response contains valuable information, the pace of your delivery seems to be too slow. It " \
+                      "may be beneficial to pick up the pace a bit in order to maintain the listener's engagement. Remember " \
+                      "to strike a balance between providing thorough information and maintaining an appropriate speed to " \
+                      "keep your audience attentive and interested"
     else:
-        return "Your response is delivered at a good speed, allowing the information to flow naturally and keeping " \
-               "the listener engaged. It's evident that you have taken the time to organize your thoughts and convey " \
-               "your ideas clearly and efficiently. Keep up the good work in maintaining a balanced and effective " \
-               "pace in your future responses!", pace
+        pace_result = "Your response is delivered at a good speed, allowing the information to flow naturally and keeping the listener engaged. It's evident that you have taken the time to organize your thoughts and convey the listener engaged. It's evident that you have taken the time to organize your thoughts and convey your ideas clearly and efficiently. Keep up the good work in maintaining a balanced and effective pace in your future responses!"
+    return pace, pace_result

@@ -1,5 +1,14 @@
 import os
-from flask import Flask, render_template, request, url_for, redirect, session, flash
+from flask import (
+    Flask,
+    render_template,
+    request,
+    url_for,
+    redirect,
+    session,
+    flash,
+    send_file,
+)
 import re
 import mysql.connector
 from flask import request
@@ -11,6 +20,8 @@ import speech_recognition as sr1
 import nlp
 import json
 from datetime import datetime
+import speech_text, feedback_analysis
+from markupsafe import Markup
 
 app = Flask(__name__)
 
@@ -29,6 +40,7 @@ app.secret_key = "abc123"
 
 cursor = mydb.cursor()
 transcript = ""
+sentiment_analyis = {}
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -38,7 +50,7 @@ def index():
         email = request.form.get("email")
         password = request.form.get("password")
 
-        user_data = database.fetch_entry(email=email, password=password)
+        user_data = database.fetch_current_user(email=email, password=password)
         print(user_data)
         json_object = json.dumps(user_data, indent=5)
         with open("user.json", "w") as outfile:
@@ -55,7 +67,7 @@ def signup():
         email = request.form.get("email")
         password = request.form.get("password")
 
-        value_check = database.user_entry(
+        value_check = database.insert_user(
             username=username, email=email, password=password
         )
 
@@ -69,8 +81,6 @@ def signup():
 
 @app.route("/home")
 def home():
-    # cursor.execute("Select * from users where emailID = %s", ("emailID"))
-    # userDetails = cursor.fetchall()
     return render_template("home.html")
 
 
@@ -83,6 +93,7 @@ def practice():
 def recordQuestion(questionID):
     if request.method == "POST" and request.form.get("Record") == "Record":
         global transcript
+        global sentiment_analyis
         r = sr1.Recognizer()
 
         samplerate = 44100  # Hertz
@@ -99,14 +110,14 @@ def recordQuestion(questionID):
         import speech_text
 
         audio_url = speech_text.upload(filename)
-        s, t = speech_text.save_transcript(
+        t, s = speech_text.save_transcript(
             audio_url, "file_title", sentiment_analysis=True
         )
-        print(s)
-        transcript = s
-        print(nlp.entity_analysis_q1(s))
-        print("confidence analysis:", t)
-        return render_template("practice_ques.html", transcript=s)
+        transcript = t
+        sentiment_analyis = s
+        print(nlp.entity_analysis_q1(t))
+        print("confidence analysis:", s)
+        return render_template("practice_ques.html", transcript=t)
     elif (
         request.method == "POST"
         and request.form.get("Submit_Answer") == "Submit_Answer"
@@ -115,31 +126,85 @@ def recordQuestion(questionID):
 
         current_date = now.date()
         current_time = now.time()
-        database.add_response(questionID, transcript, current_date, current_time)
+
+        database.add_response(
+            questionID, transcript, current_date, current_time, sentiment_analyis
+        )
 
         return render_template("practice.html")
     else:
-        return render_template("practice_ques.html")
+        return render_template("practice_ques.html", questionID=questionID)
 
 
 @app.route("/review")
 def review():
     database.fetch_current_user_responses()
-    return render_template("review.html")
-
-
-# @app.route("/profile")
-def profile():
-    cursor.execute("Select * from users where emailID = %s", ("emailID"))
-    userDetails = cursor.fetchall()
-    print(userDetails)
+    f = open("responses.json")
+    data = json.load(f)
+    return render_template("review.html", responses=data)
 
 
 @app.route("/feedback")
 def feedback():
+    return render_template("feedback.html")
+
+
+@app.route("/feedbackData/<getResponseFromJson>")
+def feedbackData(getResponseFromJson):
+    global sentiment_analysis
     g = open("user.json")
-    data = json.load(g)
-    return render_template("feedback.html", username=data["username"])
+    userData = json.load(g)
+
+    h = open("questions.json")
+    questionData = json.load(h)
+
+    k = open("responses.json")
+    responseData = json.load(k)
+
+    # print(questionData)
+    # print(getResponseFromJson)
+    # print(responseData[getResponseFromJson])
+
+    new_response_json_string = responseData[getResponseFromJson]
+
+    print(sentiment_analyis)
+    print(new_response_json_string["response_text"])
+
+    feedback_analysis.sentiment_find(sentiment_analyis)
+
+    if new_response_json_string["questionID"] == 1:
+        feedback_analysis.entity_highlight_q1(new_response_json_string["response_text"])
+    elif new_response_json_string["questionID"] == 2:
+        feedback_analysis.entity_highlight_q2(new_response_json_string["response_text"])
+    else:
+        feedback_analysis.entity_highlight_q3(new_response_json_string["response_text"])
+
+    feedback_analysis.pace(new_response_json_string["response_text"])
+    # print(pace_result, pace)
+
+    str1 = ""
+    with open("static/feedbackImages/sentence.svg") as file:
+        for item in file:
+            str1 += item
+            # print(item)
+
+    userResponseFeedback = {
+        "username": userData["username"],
+        "question": questionData[str(new_response_json_string["questionID"])],
+        "responseText": new_response_json_string["response_text"],
+        "feedback": new_response_json_string["feedback"],
+        "date": new_response_json_string["date"],
+        "time": new_response_json_string["time"],
+        "svg_element": str1,
+    }
+
+    return render_template("feedback.html", responseData=userResponseFeedback)
+
+
+# @app.route("/sentence_analysis_image")
+# def sentence_analysis_image():
+#     filename = "static/feedbackImages/sentence.svg"
+#     return send_file(filename, mimetype="image/svg+xml")
 
 
 @app.route("/logout")
