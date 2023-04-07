@@ -14,14 +14,16 @@
     <nav>
       <div class="nav-title">
         <h1 style="display: inline-block;">Welcome<span style="color: var(--brown)"> {{ username }} </span></h1>
-        <a href="{{ url_for('logout') }}"></a>
+        <a href="{{ url_for('logout') }}">
+          <img src={{url_for("static", filename="images/logout.png")}} style="width:42px;height:42px;float:right;margin:50px">
+        </a>
       </div>
     </nav>
 
     <div class="main-home">
       <a href="{{ url_for('practice') }}" class="practice">
         <div class="main-home-inner">
-          <img src={{ url_for('static', filename='images/Practice.png' ) }}>
+          <img src={{url_for('static', filename='images/Practice.png' ) }}>
           <div class="text">
             <h2>Practice</h2>
             <p>
@@ -35,7 +37,7 @@
       <a href="{{ url_for('review') }}" class="review">
         <div class="main-home-inner">
           <!-- <img src="images/Feedback.png" alt=""> -->
-          <img src={{ url_for('static', filename='images/Feedback.png' ) }}>
+          <img src={{url_for('static', filename='images/Feedback.png' ) }}>
           <div class="text">
             <h2>Review</h2>
             <p>

@@ -5,7 +5,7 @@ import feedback_analysis
 mydb = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="MySQLShell@900",  # Change password according to system
+    password="sang123",  # Change password according to system
     database="interview_preparation",
 )
 

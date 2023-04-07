@@ -28,7 +28,7 @@ app = Flask(__name__)
 mydb = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="MySQLShell@900",  # Change password according to system
+    password="sang123",  # Change password according to system
     database="interview_preparation",
 )
 
@@ -218,8 +218,7 @@ def feedbackData(getResponseFromJson):
 
 @app.route("/logout")
 def logout():
-    cursor.execute("select * from users where email = %s", [])
-
+    # cursor.execute("select * from users where email = %s", [])
     return render_template("login.html")
 
 

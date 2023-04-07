@@ -12,7 +12,10 @@
   <body>
     <nav>
       <div class="nav-title">
-        <h1>Practice</h1>
+        <h1 style="display: inline-block;">Practice</h1>
+        <a href="{{ url_for('home') }}">
+          <img src={{url_for("static", filename="images/home.png")}} style="width:42px;height:42px;float:right;margin:50px">
+        </a>
       </div>
     </nav>
 
@@ -32,7 +35,7 @@
 
       <a href="{{ url_for('recordQuestion', questionID = 2) }}" class="strength">
         <div class="main-home-inner">
-          <img src={{ url_for('static', filename="images/Strengths.png" ) }} alt="">
+          <img src={{url_for('static', filename="images/Strengths.png" ) }} alt="">
           <div class="text-prac">
             <h2>What are your strengths?</h2>
             <p>
@@ -45,7 +48,7 @@
 
       <a href="{{ url_for('recordQuestion', questionID = 3) }}" class="future">
         <div class="main-home-inner">
-          <img src={{ url_for('static', filename="images/Future.png" ) }} alt="">
+          <img src={{url_for('static', filename="images/Future.png" ) }} alt="">
           <div class="text-prac">
             <h2>Where do you see yourself in the future?</h2>
             <p>
