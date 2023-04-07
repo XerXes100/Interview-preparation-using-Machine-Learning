@@ -219,6 +219,7 @@ def feedbackData(getResponseFromJson):
 @app.route("/logout")
 def logout():
     # cursor.execute("select * from users where email = %s", [])
+
     return render_template("login.html")
 
 
