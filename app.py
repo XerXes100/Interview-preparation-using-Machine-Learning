@@ -152,6 +152,7 @@ def feedback():
 @app.route("/feedbackData/<getResponseFromJson>")
 def feedbackData(getResponseFromJson):
     global sentiment_analysis
+
     g = open("user.json")
     userData = json.load(g)
 
@@ -167,20 +168,7 @@ def feedbackData(getResponseFromJson):
 
     new_response_json_string = responseData[getResponseFromJson]
 
-    print(sentiment_analysis)
-    print(new_response_json_string["response_text"])
-
-    feedback_analysis.sentiment_find(sentiment_analysis)
-
-    if new_response_json_string["questionID"] == 1:
-        feedback_analysis.entity_highlight_q1(new_response_json_string["response_text"])
-    elif new_response_json_string["questionID"] == 2:
-        feedback_analysis.entity_highlight_q2(new_response_json_string["response_text"])
-    else:
-        feedback_analysis.entity_highlight_q3(new_response_json_string["response_text"])
-
-    feedback_analysis.pace(new_response_json_string["response_text"])
-    # print(pace_result, pace)
+    print(new_response_json_string["questionID"])
 
     str1 = ""
     with open("static/feedbackImages/sentence.svg") as file:

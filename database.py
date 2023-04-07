@@ -1,5 +1,6 @@
 import mysql.connector
 import json
+import feedback_analysis
 
 mydb = mysql.connector.connect(
     host="localhost",
@@ -239,12 +240,12 @@ def add_response(questionID, response, current_date, current_time, sentiment_ana
 
     mydb.commit()
 
-    insert_output(response_id, questionID, sentiment_analysis)
     fetch_current_user_responses()
     print("Response added successfully")
+    insert_output(response_id, response, questionID, sentiment_analysis)
 
 
-def insert_output(responseID, questionID, sentiment_analysis):
+def insert_output(responseID, response, questionID, sentiment_analysis):
     pos, neu, neg = 0, 0, 0
     for i in sentiment_analysis:
         if i["sentiment"] == "POSITIVE":
@@ -271,15 +272,33 @@ def insert_output(responseID, questionID, sentiment_analysis):
         questionID, \
         positive_sentiment, \
         negative_sentiment, \
-        neutral_sentiment, \
+        neutral_sentiment \
         ) VALUES (%s, %s, %s, %s, %s, %s);"
 
-    output_values = [output_id, int(responseID), int(questionID), pos, neg, neu]
+    output_values = [
+        int(output_id),
+        int(responseID),
+        int(questionID),
+        int(pos),
+        int(neg),
+        int(neu),
+    ]
 
     cursor.execute(sql_insert_output, output_values)
 
     mydb.commit()
     print("Output added successfully")
+
+    feedback_analysis.sentiment_find(sentiment_analysis)
+
+    if questionID == 1:
+        feedback_analysis.entity_highlight_q1(response)
+    elif questionID == 2:
+        feedback_analysis.entity_highlight_q2(response)
+    else:
+        feedback_analysis.entity_highlight_q3(response)
+
+    feedback_analysis.pace(response)
 
 
 def fetch_responses():
