@@ -102,7 +102,7 @@ def recordQuestion(questionID):
         r = sr1.Recognizer()
 
         samplerate = 44100  # Hertz
-        duration = 10  # seconds
+        duration = 35  # seconds
         filename = "output.wav"
 
         print("\n")

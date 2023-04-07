@@ -477,8 +477,9 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  height: 250vh;
+  height: 270vh;
   margin-bottom: 50px;
+
 }
 
 #feedback .feedback-user {
