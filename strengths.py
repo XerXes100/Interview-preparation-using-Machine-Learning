@@ -82,3 +82,43 @@
 #     print()
 # # else:
 #     print("Less than 3 strengths were extracted.")
+input_text = "I am a creative problem solver with excellent communication skills and a strong work ethic."
+
+strengths = ["Excellent communication skills", "Strong problem solving abilities", "Leadership skills",
+             "Teamwork and collaboration", "Adaptability","flexibility", "Attention to detail",
+             "Ability to learn quickly", "Innovation and creativity",
+             "Strong work ethic","time management", "Positive attitude and enthusiasm",
+             "Effective decision-making", "Customer service orientation", "Organizational skills",
+             "Ability to work under pressure", "Strategic thinking", "Interpersonal skills",
+             "Conflict resolution", "Negotiation skills", "Critical thinking", "Analytical skills",
+             "Project management", "Data analysis","interpretation", "Self-motivation", "Networking",
+             "Mentoring","coaching", "Public speaking", "Financial acumen", "Sales and marketing",
+             "Risk management", "Multitasking", "Initiative","proactivity", "Cultural sensitivity",
+             "Empathy", "Resilience", "Problem identification", "Research and development", "Creativity",
+             "Technical proficiency", "Emotional intelligence", "Collaborative decision-making",
+             "Active listening"]
+
+strengths_found = []
+
+for strength in strengths:
+    if strength.lower() in input_text.lower():
+        start_pos = input_text.lower().find(strength.lower())
+        end_pos = start_pos + len(strength)
+        strengths_found.append((strength, start_pos, end_pos))
+
+print("Strengths identified in input text: ")
+for strength, start_pos, end_pos in strengths_found:
+    print(f"{strength} - Starting position: {start_pos}, Ending position: {end_pos}")
+
+ents1=[]
+ex=[]
+# dic_str = {"start":0,"end":0,"label":"Strength"};
+for strength, start_pos, end_pos in strengths_found:
+    dic_str = {"start":start_pos , "end": end_pos, "label": "Strength"};
+    ents1.append(dic_str)
+print("ENTS",ents1)
+
+ex.append({'text':input_text})
+ex.append(ents1)
+print("EXX",ex)
+print(len(strengths_found))
