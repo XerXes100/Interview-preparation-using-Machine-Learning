@@ -32,17 +32,6 @@ def create_table_users():
 
 
 def create_table_questions():
-    # cursor.execute(
-    #     "CREATE TABLE IF NOT EXISTS users ( \
-    #         userID INT PRIMARY KEY, \
-    #         username VARCHAR (255), \
-    #         email VARCHAR(255), \
-    #         password VARCHAR(255), \
-    #         photo LONGBLOB NOT NULL, \
-    #         isLoggedIn BOOL \
-    #     );"
-    # )
-
     cursor.execute(
         "CREATE TABLE IF NOT EXISTS questions ( \
             questionID INT PRIMARY KEY, \
@@ -208,14 +197,6 @@ def add_response(questionID, response, current_date, current_time, sentiment_ana
         last_response_id = row[0]
         response_id = int(str(last_response_id)) + 1
 
-    # with open(filename, 'rb') as file:
-    #     binary_data = file.read()
-
-    # return binary_data
-
-    # with open("output.wav", 'rb') as file:
-    #     binaryData = file.read()
-
     sql_insert_response = f"INSERT INTO responses(\
         responseID, \
         userID, \
@@ -242,20 +223,11 @@ def add_response(questionID, response, current_date, current_time, sentiment_ana
 
     fetch_current_user_responses()
     print("Response added successfully")
-    insert_output(response_id, response, questionID, sentiment_analysis)
+    return response_id
 
 
 def insert_output(responseID, response, questionID, sentiment_analysis):
-    pos, neu, neg = 0, 0, 0
-    for i in sentiment_analysis:
-        if i["sentiment"] == "POSITIVE":
-            pos += 1
-        elif i["sentiment"] == "NEUTRAL":
-            neu += 1
-        else:
-            neg += 1
-
-    print(pos, neu, neg)
+    pos, neu, neg, sentiment_text = feedback_analysis.sentiment_find(sentiment_analysis)
 
     cursor.execute("select * from outputs order by outputID DESC LIMIT 1")
     last_output = cursor.fetchall()
@@ -289,16 +261,35 @@ def insert_output(responseID, response, questionID, sentiment_analysis):
     mydb.commit()
     print("Output added successfully")
 
-    feedback_analysis.sentiment_find(sentiment_analysis)
+    entity_text = (
+        "Given above is your response in which we have highlighted entities that are relevant to the question. By "
+        "mentioning these entities, you have provided valuable context and insight, making your response more "
+        "robust and insightful. "
+    )
+
+    entity = []
+    miss_entity_text = ""
+    pace_result_text = ""
+    total_strengths_found = 0
 
     if questionID == 1:
-        feedback_analysis.entity_highlight_q1(response)
+        entity = feedback_analysis.entity_highlight_q1(response)
+        miss_entity_text = feedback_analysis.miss_entity_q1(entity)
     elif questionID == 2:
-        feedback_analysis.entity_highlight_q2(response)
+        total_strengths_found = feedback_analysis.entity_highlight_q2(response)
+        miss_entity_text = feedback_analysis.miss_entity_q2(total_strengths_found)
     else:
-        feedback_analysis.entity_highlight_q3(response)
+        entity = feedback_analysis.entity_highlight_q3(response)
+        miss_entity_text = feedback_analysis.miss_entity_q3(entity)
 
-    feedback_analysis.pace(response)
+    pace_result_text = feedback_analysis.pace(response)
+
+    return {
+        "sentimentText": sentiment_text,
+        "entityText": entity_text,
+        "missEntityText": miss_entity_text,
+        "paceResultText": pace_result_text,
+    }
 
 
 def fetch_responses():

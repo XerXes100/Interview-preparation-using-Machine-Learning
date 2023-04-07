@@ -134,7 +134,7 @@ def pauses(audio_file):
 
 
 def get_audio_pace(audio_file_path, s):
-    r = sr.Recognizer()
+    # r = sr.Recognizer()
 
     # with sr.AudioFile(audio_file_path) as source:
     #     audio = r.record(source)  # read the entire audio file
@@ -154,12 +154,28 @@ def get_audio_pace(audio_file_path, s):
     )  # calculate the duration of the audio file in seconds
     num_words = len(s.split())  # get the number of words spoken in the audio file
     pace = num_words / (duration / 60)  # calculate the pace in WPM
-    print(pace)
+    # print(pace)
     pace_result = ""
-    if pace > 200:
-        pace_result = "The audio is too fast. You may want to slow down the pace."
-    elif pace < 120:
-        pace_result = "The audio is too slow. You may want to increase the pace."
+    if pace > 190:
+        pace_result = (
+            "While your response contains valuable content, the pace of your delivery seems to be too fast. It's "
+            "important to ensure that your speech is clear and easy to follow for the listener. Try to slow down a "
+            "bit and allow the information to sink in, while still maintaining a confident and articulate tone. "
+            "Remember, pacing is crucial in effective communication, so be mindful of your speed to ensure your "
+            "message is effectively conveyed"
+        )
+    elif pace < 130:
+        pace_result = (
+            "While your response contains valuable information, the pace of your delivery seems to be too slow. It "
+            "may be beneficial to pick up the pace a bit in order to maintain the listener's engagement. Remember "
+            "to strike a balance between providing thorough information and maintaining an appropriate speed to "
+            "keep your audience attentive and interested"
+        )
     else:
-        pace_result = "The pace of the audio is just right."
+        pace_result = (
+            "Your response is delivered at a good speed, allowing the information to flow naturally and keeping "
+            "the listener engaged. It's evident that you have taken the time to organize your thoughts and convey "
+            "your ideas clearly and efficiently. Keep up the good work in maintaining a balanced and effective "
+            "pace in your future responses!"
+        )
     return pace, pace_result

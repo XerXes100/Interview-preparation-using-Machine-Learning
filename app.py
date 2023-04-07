@@ -72,6 +72,11 @@ def signup():
         )
 
         if value_check == "Value inserted":
+            user_data = database.fetch_current_user(email=email, password=password)
+            print(user_data)
+            json_object = json.dumps(user_data, indent=5)
+            with open("user.json", "w") as outfile:
+                outfile.write(json_object)
             return render_template("home.html", username=username)
         else:
             return render_template("signup.html", result="Account already exists!")
@@ -127,9 +132,18 @@ def recordQuestion(questionID):
         current_date = now.date()
         current_time = now.time()
 
-        database.add_response(
+        responseID = database.add_response(
             questionID, transcript, current_date, current_time, sentiment_analysis
         )
+
+        feedbackAnalysisData = database.insert_output(
+            responseID, transcript, questionID, sentiment_analysis
+        )
+
+        # print(feedbackAnalysisData)
+        json_object = json.dumps(feedbackAnalysisData)
+        with open("feedbackAnalysis.json", "w") as outfile:
+            outfile.write(json_object)
 
         return render_template("practice.html")
     else:
@@ -162,6 +176,9 @@ def feedbackData(getResponseFromJson):
     k = open("responses.json")
     responseData = json.load(k)
 
+    l = open("feedbackAnalysis.json")
+    feedbackAnalysisData = json.load(l)
+
     # print(questionData)
     # print(getResponseFromJson)
     # print(responseData[getResponseFromJson])
@@ -184,6 +201,10 @@ def feedbackData(getResponseFromJson):
         "date": new_response_json_string["date"],
         "time": new_response_json_string["time"],
         "svg_element": str1,
+        "sentimentText": feedbackAnalysisData["sentimentText"],
+        "entityText": feedbackAnalysisData["entityText"],
+        "missEntityText": feedbackAnalysisData["missEntityText"],
+        "paceResultText": feedbackAnalysisData["paceResultText"],
     }
 
     return render_template("feedback.html", responseData=userResponseFeedback)

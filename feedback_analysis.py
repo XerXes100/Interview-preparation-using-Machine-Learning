@@ -24,7 +24,7 @@ def sentiment_find(t):
         else:
             neg += 1
     height = [pos, neu, neg]
-    bars = ("Positive", "Negative", "Neutral")
+    bars = ("Positive", "Neutral", "Negative")
     x_pos = np.arange(len(bars))
 
     plt.switch_backend("Agg")
@@ -36,7 +36,7 @@ def sentiment_find(t):
     plt.xticks(x_pos, bars)
     plt.savefig("static/feedbackImages/sentiment.png")
 
-    if pos > neu and neg >= 0:
+    if pos >= neu and pos > neg:
         str_sent = (
             "Your response carries a positive sentiment that is evident in your choice of words, tone, "
             "and overall demeanor. Your enthusiastic and optimistic approach creates a favorable impression and "
@@ -44,7 +44,7 @@ def sentiment_find(t):
             "uplifting, making it enjoyable for the listener to receive your insights. Well done in maintaining "
             "a positive tone in your response, as it enhances the overall impact of your communication! "
         )
-    elif neu > pos and neg >= 0:
+    elif neu > pos and neu >= neg:
         str_sent = (
             "Your response conveys a neutral sentiment, providing information without expressing any specific "
             "emotional tone. While a neutral sentiment can be appropriate in certain situations, be mindful to "
@@ -100,12 +100,7 @@ def entity_highlight_q1(text):
     directory = os.getcwd()
     output_path = Path(directory + "/static/feedbackImages/sentence.svg")
     output_path.open("w", encoding="utf-8").write(svg)
-    str1 = (
-        "Given above is your response in which we have highlighted entities that are relevant to the question. By "
-        "mentioning these entities, you have provided valuable context and insight, making your response more "
-        "robust and insightful. "
-    )
-    return str1
+    return entity
 
 
 def entity_highlight_q2(input_text):
@@ -181,6 +176,8 @@ def entity_highlight_q2(input_text):
     directory = os.getcwd()
     output_path = Path(directory + "/static/feedbackImages/sentence.svg")
     output_path.open("w", encoding="utf-8").write(svg)
+    return len(strengths_found)
+
 
 def entity_highlight_q3(text):
     nlp1 = spacy.load(r"output2/model-best")
@@ -203,15 +200,7 @@ def entity_highlight_q3(text):
     directory = os.getcwd()
     output_path = Path(directory + "/static/feedbackImages/sentence.svg")
     output_path.open("w", encoding="utf-8").write(svg)
-    str1 = (
-        "Given above is your response in which we have highlighted entities that are relevant to the question. By "
-        "mentioning these entities, you have provided valuable context and insight, making your response more "
-        "robust "
-        "and insightful. "
-    )
-    return str1
-
-
+    return entity
 
 
 def miss_entity_q1(entity):
@@ -245,6 +234,15 @@ def miss_entity_q1(entity):
         )
     return str2
 
+
+def miss_entity_q2(strength_count):
+    if strength_count < 3:
+        str2 = f"Based on your response, it seems you have {strength_count} strengths. You need to provide more examples that demonstrate your strengths. A good rule of thumb is to provide atleast 3 strengths with examples of when you demonstrated your strengths."
+    else:
+        str2 = "From what you've shared, it seems like you have mentioned several strengths to showcase yourself. Mentioning strengths along with examples where you demonstarted strengths helps drive the point in the interviewer's mind."
+    return str2
+
+
 def miss_entity_q3(entity):
     ideal_ent = ["Passion", "Growth", "Vision", "Leadership"]
     y = set(ideal_ent) ^ set(entity)
@@ -265,6 +263,7 @@ def miss_entity_q3(entity):
             )
         )
     return str2
+
 
 def pause():
     pauses_count = nlp.pauses(filename)
@@ -296,12 +295,14 @@ def pace(speech):
             delta={"reference": 130},
             gauge={
                 "axis": {"range": [None, 250]},
+                "bar": {"color": "#F5F1F0"},
                 "steps": [
-                    {"range": [0, 125], "color": "lightgray"},
-                    {"range": [100, 250], "color": "gray"},
+                    {"range": [0, 130], "color": "#A1A1A1"},
+                    {"range": [130, 190], "color": "#727272"},
+                    {"range": [190, 250], "color": "#494949"},
                 ],
                 "threshold": {
-                    "line": {"color": "red", "width": 4},
+                    "line": {"color": "#DF0B0B", "width": 4},
                     "thickness": 0.75,
                     "value": 190,
                 },
