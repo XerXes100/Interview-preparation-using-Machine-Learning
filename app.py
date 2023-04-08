@@ -147,7 +147,35 @@ def recordQuestion(questionID):
 
         return render_template("practice.html")
     else:
-        return render_template("practice_ques.html", questionID=questionID)
+        tips = []
+        if questionID == 1:
+            tips = [
+                "Make a list of your strengths.",
+                "Keep your response concise.",
+                "Be honest about your strengths.",
+                "Stay humble and don't brag about yourself.",
+                "Try to relate your strengths with the job description.",
+                "Give examples of times when you demonstrated your strengths.",
+            ]
+        elif questionID == 2:
+            tips = [
+                "Be authentic.",
+                "Be confident about yourself.",
+                "Focus on your professional self.",
+                "Provide some background information.",
+                "Talk about your experiences and interests.",
+                "Tailor your response and connect it to the job.",
+            ]
+        elif questionID == 3:
+            tips = [
+                "Talk about specific goals.",
+                "Show eagerness to learn and grow.",
+                "Show commitment to a long-term career with the company.",
+                "Convey your intention to contribute positively to the company's success.",
+            ]
+        else:
+            tips = ["You've got this!"]
+        return render_template("practice_ques.html", questionID=questionID, tips=tips)
 
 
 @app.route("/review")
