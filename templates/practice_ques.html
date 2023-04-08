@@ -14,9 +14,10 @@
         <nav>
             <div class="nav-title">
                 <h1 style="display: inline-block;">Practice</h1>
-        <a href="{{ url_for('home') }}">
-          <img src={{url_for("static", filename="images/home.png")}} style="width:42px;height:42px;float:right;margin:50px">
-        </a>
+                <a href="{{ url_for('home') }}">
+                    <img src={{url_for("static", filename="images/home.png" )}}
+                        style="width:42px;height:42px;float:right;margin:50px">
+                </a>
             </div>
         </nav>
 
@@ -41,14 +42,18 @@
                         <h2>Uh-oh!</h2>
                         {% endif %}
 
+
+                        {% if tips %}
                         <h4>Tips to answer this question: </h4>
-                        <ul>
-                            <li style="margin: 5px 0px;">Make a list of all your strengths</li>
-                            <li>Make a list of all your strengths</li>
-                            <li>Make a list of all your strengths</li>
-                            <li>Make a list of all your strengths</li>
-                            <li>Make a list of all your strengths</li>
+                        <ul style="text-align: left;">
+                            {% for tip in tips %}
+                            <li style="margin: 5px 0px;">{{ tip }}</li>
+                            {% endfor %}
                         </ul>
+                        {% else %}
+                        <p>You've got this!</p>
+                        {% endif %}
+
                     </div>
                 </div>
                 </a>
