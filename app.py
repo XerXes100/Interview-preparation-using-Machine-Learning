@@ -103,13 +103,13 @@ def recordQuestion(questionID):
 
         samplerate = 44100  # Hertz
         duration = 35  # seconds
-        filename = "output.wav"
+        filename = "output2.wav"
 
         print("\n")
         print("Start talking:")
-        # mydata = sd.rec(int(samplerate * duration), samplerate=samplerate, channels=1, blocking=True)
-        # sf.write(filename, mydata, samplerate)
-        hellow = sr1.AudioFile("output.wav")
+        mydata = sd.rec(int(samplerate * duration), samplerate=samplerate, channels=1, blocking=True)
+        sf.write(filename, mydata, samplerate)
+        hellow = sr1.AudioFile("output2.wav")
         with hellow as source:
             audio = r.record(source)
         import speech_text
