@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+        <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+    </head>
+
+    <body>
+        <div class="main">
+            <div class="text">
+                <div class="text-inner">
+                    <h2>Welcome back!</h2>
+                    <p class="enter">Please enter your details to log in</p>
+
+                    <form action="" method="post">
+                        <div class="details">
+                            <label for="email">Email ID </label>
+                            <input name="email" type="email" placeholder="johndoe@organisation.com" id="email" required>
+                        </div>
+
+                        <div class="details">
+                            <label for="password">Password</label>
+                            <input name="password" type="password" placeholder="password" id="password" required>
+                        </div>
+
+                        <button id="submit" type="submit">
+                            Submit
+                        </button>
+                    </form>
+
+                    <div class="tip">
+                        <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign Up</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="picture">
+                <img src={{url_for('static', filename='images/LogIn.png' ) }}>
+                <!-- <img src="./images/Log In.png" alt=""> -->
+            </div>
+        </div>
+    </body>
+
+</html>

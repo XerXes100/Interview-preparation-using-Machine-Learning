@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Feedback</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+
+    </head>
+
+    <body>
+        <nav>
+            <div class="nav-title">
+                <h1 style="display: inline-block;"> Feedback </h1>
+                <a href="{{ url_for('home') }}">
+                    <img src={{url_for("static", filename="images/home.png")}} style="width:42px;height:42px;float:right;margin:50px">
+                </a>
+            </div>
+
+
+
+        </nav>
+
+        <div class="main-home" id="feedback">
+            <div class="feedback-user">
+                <h2 style="color: #7e3f3f">Feedback for {{responseData["username"]}}</h2>
+                <p style="font-family: 'Playfair Display'">{{responseData["time"]}} | {{responseData["date"]}} </p>
+            </div>
+
+
+            <div class="feedback-response-inner">
+                <h3>Entity Analysis</h3>
+                {{ responseData["svg_element"]|safe}}
+            </div>
+            <br>
+            <br>
+
+            <div class="feedback-response-inner">
+                <!-- <h3>Entity Analysis Feedback</h3> -->
+                {{ responseData["entityText"]}}
+            </div>
+
+            <br>
+            <hr style="border-top:5px solid #7E3F3F;width:50%">
+
+            <div class="feedback-response-inner">
+                <h3>Entity Analysis Feedback</h3>
+                {{ responseData["missEntityText"]}}
+            </div>
+
+            <br>
+            <hr style="border-top:5px solid #7E3F3F;width:50%">
+
+            <div class="feedback-response-inner">
+                <h3>Sentiment Analysis</h3>
+                <img style="height: 400px;" src="{{ url_for('static', filename='feedbackImages/sentiment.png' ) }}"
+                    alt="sentiment_analysis">
+            </div>
+
+            <div class="feedback-response-inner">
+                <h3>Sentiment Analysis Feedback</h3>
+                {{ responseData["sentimentText"]}}
+            </div>
+
+            <br>
+            <hr style="border-top:5px solid #7E3F3F;width:50%">
+
+            <div class="feedback-response-inner">
+                <h3>Pace Analysis</h3>
+                <img style="height: 400px;" src="{{ url_for('static', filename='feedbackImages/pace.png' ) }}"
+                    alt="pace_analysis">
+            </div>
+
+            <div class="feedback-response-inner">
+                <h3>Pace Analysis Feedback</h3>
+                {{ responseData["paceResultText"]}}
+            </div>
+
+            <hr style="color: #a1a1a1;">
+            <br>
+        </div>
+    </body>
+
+</html>

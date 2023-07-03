@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Practice</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+
+    </head>
+
+    <body>
+        <nav>
+            <div class="nav-title">
+                <h1 style="display: inline-block;">Practice</h1>
+                <a href="{{ url_for('home') }}">
+                    <img src={{url_for("static", filename="images/home.png" )}}
+                        style="width:42px;height:42px;float:right;margin:50px">
+                </a>
+            </div>
+        </nav>
+
+        <div class="main-home">
+
+            <div class="practice practice1" style="align-items: flex-start;">
+                <div class="main-home-inner practice-ques ">
+                    <div class="text">
+                        {% if questionID == "1" %}
+                        <h2>Tell me about yourself</h2>
+                        {% endif %}
+
+                        {% if questionID == "2" %}
+                        <h2>What are your strengths?</h2>
+                        {% endif %}
+
+                        {% if questionID == "3" %}
+                        <h2>Where do you see yourself in the future?</h2>
+                        {% endif %}
+
+                        {% if questionID == "" %}
+                        <h2>Uh-oh!</h2>
+                        {% endif %}
+
+
+                        {% if tips %}
+                        <h4>Tips to answer this question: </h4>
+                        <ul style="text-align: left;">
+                            {% for tip in tips %}
+                            <li style="margin: 5px 0px;">{{ tip }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p>You've got this!</p>
+                        {% endif %}
+
+                    </div>
+                </div>
+                </a>
+            </div>
+
+            <div class="review">
+                <div class="main-home-inner practice-ques review1">
+                    <div class="text">
+                        <textarea name="response" id="" rows="15"> {{transcript}}</textarea>
+                        <div class="buttons">
+                            <form method="post" action="">
+                                <button name="Record" class="review-record" type="submit" value="Record">Record</button>
+                            </form>
+                            <form method="post">
+                                <button name="Submit_Answer" class="review-submit" type="submit"
+                                    value="Submit_Answer">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+    </body>
+
+</html>

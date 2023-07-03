@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Review</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+
+    </head>
+
+    <body>
+        <nav>
+            <div class="nav-title">
+                <h1 style="display:inline-block"> Review </h1>
+                <a href="{{ url_for('home') }}">
+                    <img src={{url_for("static", filename="images/home.png")}} style="width:42px;height:42px;float:right;margin:50px">
+                </a>
+            </div>
+        </nav>
+
+        <div class="main-home" id="review">
+
+            {% for i in range(responses["0"]) %}
+
+            <a href="{{ url_for('feedbackData', getResponseFromJson = i+1) }}" class="review-item">
+                <div class="review-item-date">
+                    <p>{{responses[(i+1)|string]["time"]}}</p>
+                    <p>{{responses[(i+1)|string]["date"]}}</p>
+                </div>
+                <div class="review-item-title">
+                    <!-- <h2>Introduce yourself<span class="greater"> &gt; </span></h2> -->
+
+                    {% if responses[(i+1)|string]["questionID"] == 1 %}
+                    <h2>Tell me about yourself</h2>
+                    {% endif %}
+
+                    {% if responses[(i+1)|string]["questionID"] == 2 %}
+                    <h2>What are your strengths?</h2>
+                    {% endif %}
+
+                    {% if responses[(i+1)|string]["questionID"] == 3 %}
+                    <h2>Where do you see yourself in the future?</h2>
+                    {% endif %}
+
+                    {% if responses[(i+1)|string]["questionID"] == "" %}
+                    <h2>Uh-oh!</h2>
+                    {% endif %}
+                </div>
+            </a>
+            <br>
+            {% endfor %}
+
+
+            <!-- <a href="{{ url_for('feedback') }}" class="review-item">
+                <div class="review-item-date">
+                    <p> 09:00 am </p>
+                    <p>30th December, 2022 </p>
+                </div>
+                <div class="review-item-title">
+                    <h2>Introduce yourself</h2>
+                </div>
+            </a> -->
+
+        </div>
+    </body>
+
+</html>
