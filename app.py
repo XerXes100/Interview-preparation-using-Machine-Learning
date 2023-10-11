@@ -28,7 +28,7 @@ app = Flask(__name__)
 mydb = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="sang123",  # Change password according to system
+    password="MySQLShell@900",  # Change password according to system
     database="interview_preparation",
 )
 
@@ -107,7 +107,9 @@ def recordQuestion(questionID):
 
         print("\n")
         print("Start talking:")
-        mydata = sd.rec(int(samplerate * duration), samplerate=samplerate, channels=1, blocking=True)
+        mydata = sd.rec(
+            int(samplerate * duration), samplerate=samplerate, channels=1, blocking=True
+        )
         sf.write(filename, mydata, samplerate)
         hellow = sr1.AudioFile("output2.wav")
         with hellow as source:

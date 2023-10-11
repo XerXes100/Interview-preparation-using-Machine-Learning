@@ -5,12 +5,11 @@ import feedback_analysis
 mydb = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="sang123",  # Change password according to system
+    password="MySQLShell@900",  # Change password according to system
     database="interview_preparation",
 )
 
 cursor = mydb.cursor()
-
 
 with open("static/images/Feedback.png", "rb") as f:
     image_binary1 = f.read()
